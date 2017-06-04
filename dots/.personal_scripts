@@ -12,3 +12,10 @@ function moveMovie () {
 
     chmod -R 755 /data/store1/Movies
 }
+
+function fixTrackPad() {
+    echo "Fixing Trackpad..."
+    xinput --set-prop 11 "Synaptics Two-Finger Scrolling" 1 1
+    xinput --set-prop 11 "Synaptics Scrolling Distance" -114 -114
+}
+fixTrackPad

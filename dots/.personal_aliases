@@ -49,8 +49,6 @@ alias editprofile='atom ~/.bash_profile;'   # Edit Profile: Opens bash profile
 alias cow='fortune | cowsay'                # cow           Make cow speak
 alias weather='curl -4 http://wttr\.in'     # Weather:      Opens Weather App
 
-alias fixTrackpad='synclient VertScrollDelta=-114'
-
 #   -------------------------------
 #   1.  FILE AND FOLDER MANAGEMENT
 #   -------------------------------

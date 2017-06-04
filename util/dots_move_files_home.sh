@@ -45,7 +45,7 @@ function symlink_files_home () {
 #  Create symlink of all dot files to home directory
 #  $1 = project absolute path
 function full_dots_link_files_home () {
-
+    echo $(ls -A ./dots)
     for file in $(ls -A ./dots); do
         symlink_files_home $file $1
     done
