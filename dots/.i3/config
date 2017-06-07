@@ -72,16 +72,16 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 1: Main
+set $workspace1 1
 set $workspace2 2
 set $workspace3 3
-set $workspace4 4: Chat
+set $workspace4 4
 set $workspace5 5
 set $workspace6 6
 set $workspace7 7
 set $workspace8 8
 set $workspace9 9
-set $workspace10 10: Music
+set $workspace10 10
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -140,18 +140,19 @@ set $inactive-bg-color      #2f343f
 set $text-color             #f3f4f5
 set $inactive-text-color    #676E7D
 set $urgent-bg-color        #E53935
+set $indicator              #9575cd
 
 # window colors
 #                       border              background          text                indicator
-client.focused          $bg-color           $bg-color           $text-color         #00ff00
-client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-bg-color  #00ff00
-client.focused_inactive $inactive-bg-color  $inactive-bg-color  inactive-bg-color   #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color         #00ff00
+client.focused          $bg-color           $bg-color           $text-color         $indicator
+client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-bg-color  $indicator
+client.focused_inactive $inactive-bg-color  $inactive-bg-color  inactive-bg-color   $indicator
+client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color         $indicator
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks -c ~/.i3/i3blocks.conf
         position bottom
         colors {
             background  $bg-color
@@ -176,12 +177,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease screen brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
-bindsym $mod+d exec rofi -show run -config '/home/reyco/.i3/rofi_config'
+bindsym $mod+d exec rofi -show run -config '~/.i3/rofi.conf'
 
 # Startup
 exec --no-startup-id nm-applet
 exec --no-startup-id spotify
 exec --no-startup-id slack
 exec --no-startup-id discord
-exec_always --no-startup-id compton -f
-exec_always --no-startup-id feh  --bg-scale '/home/reyco/Pictures/wallpaper.png'
+exec --no-startup-id compton -f
+exec_always --no-startup-id feh  --bg-scale '~/Pictures/wallpaper.png'
