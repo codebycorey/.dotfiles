@@ -14,11 +14,6 @@ fi
 
 #   Imported Packages
 #   -----------------------------------------------
-#   Load RVM into a shell session *as a function*
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-    echo 'Sourcing .rvm...'
-    source "$HOME/.rvm/scripts/rvm"
-fi
 #   Load NVM to switch node versions quicker
 if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
     echo 'Sourcing .nvm...'
