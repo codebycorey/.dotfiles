@@ -5,7 +5,9 @@
 #  Description:  This file holds all my BASH scripts
 #
 #  ---------------------------------------------------------------------------
-
+function command_exists() {
+    type "$1" &> /dev/null ;
+}
 function moveMovie () {
 
     cp -R "$1" /data/store1/Movies
@@ -14,8 +16,10 @@ function moveMovie () {
 }
 
 function fixTrackPad() {
-    echo "Fixing Trackpad..."
-    xinput --set-prop 11 "Synaptics Two-Finger Scrolling" 1 1
-    xinput --set-prop 11 "Synaptics Scrolling Distance" -114 -114
+    if command_exists xinput ; then
+        echo "Fixing Trackpad..."
+        xinput --set-prop 11 "Synaptics Two-Finger Scrolling" 1 1
+        xinput --set-prop 11 "Synaptics Scrolling Distance" -114 -114
+    fi
 }
 fixTrackPad
