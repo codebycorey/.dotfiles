@@ -3,7 +3,7 @@
 source ./util/dots_delete_files.sh
 
 # handle whether to restore or just clear out dots
-if [ $# -eq 1 ] && [ $1 = 'restore' ]; then
+if [ $# -eq 1 ] && [ $1 = "restore" ]; then
     dots_delete_files restore
 else
     dots_delete_files
