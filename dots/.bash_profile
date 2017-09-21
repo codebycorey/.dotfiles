@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Sourcing ~/.bash_profile..."
+echo "Sourcing .bash_profile..."
 
 #   -------------------------------
 #   0.  IMPORT FILES
@@ -33,7 +33,7 @@ if [[ -s "$HOME/.git-completion.bash" ]]; then
     source "$HOME/.git-completion.bash"
 fi
 
-#   Aliases
+#   Aliases and Scripts
 #   -----------------------------------------------
 #   Aliases that I personally use
 if [[ -s "$HOME/.personal_aliases" ]]; then
@@ -47,13 +47,7 @@ if [[ -s "$HOME/.personal_scripts" ]]; then
 fi
 
 #   Load additional aliases
-<<<<<<< Updated upstream
 if [[ -s "$HOME/.bash_work" ]]; then
     echo "Sourcing .bash_work..."
     source "$HOME/.bash_work"
-=======
-if [[ -s "$HOME/.work_aliases" ]]; then
-    echo 'Sourcing .work_aliases...'
-    source "$HOME/.work_aliases"
->>>>>>> Stashed changes
 fi
