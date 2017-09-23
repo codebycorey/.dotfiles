@@ -173,6 +173,7 @@ export PATH="$PATH:/sw/bin/"
 export PATH="$PATH:/usr/local/"
 export PATH="$PATH:/usr/local/sbin"
 export PATH="$PATH:/usr/local/mysql/bin"
+export PATH="$PATH:~/.local/bin"
 
 #   Set Default Editor (change "Nano" to the editor of your choice)
 #   ------------------------------------------------------------
