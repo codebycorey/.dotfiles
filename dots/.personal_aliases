@@ -33,8 +33,6 @@ alias .3="cd ../../../"                     # Go back 3 directory levels
 alias .4="cd ../../../../"                  # Go back 4 directory levels
 alias .5="cd ../../../../../"               # Go back 5 directory levels
 alias .6="cd ../../../../../../"            # Go back 6 directory levels
-alias a="atom"                              # a:         Opens any file in atom editor
-alias a.="atom ."                           # a:         Current directory in atom editor
 alias ~="cd ~"                              # ~:            Go Home
 alias c="clear"                             # c:            Clear terminal display
 alias which="type -all"                     # which:        Find executables
@@ -43,7 +41,7 @@ alias show_options="shopt"                  # Show_options: display bash options
 alias fix_stty="stty sane"                  # fix_stty:     Restore terminal settings when screwed up
 alias cic="set completion-ignore-case On"   # cic:          Make tab-completion case-insensitive
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-alias editprofile="atom ~/.bash_profile;"   # Edit Profile: Opens bash profile
+alias code="atom-beta"
 
 # Fun stuff
 alias cow="fortune | cowsay"                # cow           Make cow speak
