@@ -125,6 +125,7 @@ ii() {
 #   -----------------------------
 # Create alias on all the folders in my workspace/code/homes directory to take me to that directory by just typing in folder
 for a in $(ls ~/develop/); do alias $a="cd ~/develop/$a"; done
+for a in $(ls ~/workspace/); do alias $a="cd ~/workspace/$a"; done
 # Tests
 alias node-test="node ./node_modules/lab/bin/lab -e development -v -m 1000"
 
