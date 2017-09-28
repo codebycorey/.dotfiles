@@ -36,14 +36,14 @@ fi
 #   Aliases and Scripts
 #   -----------------------------------------------
 #   Aliases that I personally use
-if [[ -s "$HOME/.personal_aliases" ]]; then
-    echo "Sourcing .personal_aliases..."
-    source "$HOME/.personal_aliases"
+if [[ -s "$HOME/.bash_aliases" ]]; then
+    echo "Sourcing .bash_aliases..."
+    source "$HOME/.bash_aliases"
 fi
 
-if [[ -s "$HOME/.personal_scripts" ]]; then
-    echo "Sourcing .personal_scripts..."
-    source "$HOME/.personal_scripts"
+if [[ -s "$HOME/.bash_scripts" ]]; then
+    echo "Sourcing .bash_scripts..."
+    source "$HOME/.bash_scripts"
 fi
 
 #   Load additional aliases

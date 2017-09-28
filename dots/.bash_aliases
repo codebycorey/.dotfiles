@@ -6,34 +6,25 @@
 #
 #  Sections:
 #  0.   Make Terminal Better (remapping defaults and adding functionality)
-#  1.   File And Folder Management
-#  2.   Searching
-#  3.   Networking
-#  4.   Development
-#  5.   ENVIRONMENT CONFIGURATION
-#  6.   SYSTEMS OPERATIONS & INFORMATION
-#  7.   MacOS Only
+#  1.   Searching
+#  2.   Networking
+#  3.   Development
+#  4.   ENVIRONMENT CONFIGURATION
+#  5.   PROCESS MANAGEMENT
 #
 #  ---------------------------------------------------------------------------
 
 #   -----------------------------
 #   0.  MAKE TERMINAL BETTER
 #   -----------------------------
-#
+
 alias cp="cp -iv"                           # Preferred "cp" implementation
 alias mv="mv -iv"                           # Preferred "mv" implementation
 alias mkdir="mkdir -pv"                     # Preferred "mkdir" implementation
 alias ll="ls -FGlAhp"                       # Preferred "ls" implementation
 alias less="less -FSRXc"                    # Preferred "less" implementation
 cd() { builtin cd "$@"; ll; }               # Always list directory contents upon "cd"
-alias cd..="cd ../"                         # Go back 1 directory level (for fast typers)
 alias ..="cd ../"                           # Go back 1 directory level
-alias ...="cd ../../"                       # Go back 2 directory levels
-alias .3="cd ../../../"                     # Go back 3 directory levels
-alias .4="cd ../../../../"                  # Go back 4 directory levels
-alias .5="cd ../../../../../"               # Go back 5 directory levels
-alias .6="cd ../../../../../../"            # Go back 6 directory levels
-alias ~="cd ~"                              # ~:            Go Home
 alias c="clear"                             # c:            Clear terminal display
 alias which="type -all"                     # which:        Find executables
 alias path="echo -e ${PATH//:/\\n}"         # path:         Echo all executable Paths
@@ -41,47 +32,16 @@ alias show_options="shopt"                  # Show_options: display bash options
 alias fix_stty="stty sane"                  # fix_stty:     Restore terminal settings when screwed up
 alias cic="set completion-ignore-case On"   # cic:          Make tab-completion case-insensitive
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-alias code="atom-beta"
+alias code="atom-beta"                      # code:         Opens whatever edit I prefer
 
 # Fun stuff
 alias cow="fortune | cowsay"                # cow           Make cow speak
 alias weather="curl -4 http://wttr\.in"     # Weather:      Opens Weather App
 
-#   -------------------------------
-#   1.  FILE AND FOLDER MANAGEMENT
-#   -------------------------------
-zipf () { zip -r "$1".zip "$1" ; }          # zipf:         To create a ZIP archive of a folder
-alias numFiles="echo $(ls -1 | wc -l)"      # numFiles:     Count of non-hidden files in current dir
-alias make1mb="mkfile 1m ./1MB.dat"         # make1mb:      Creates a file of 1mb size (all zeros)
-alias make5mb="mkfile 5m ./5MB.dat"         # make5mb:      Creates a file of 5mb size (all zeros)
-alias make10mb="mkfile 10m ./10MB.dat"      # make10mb:     Creates a file of 10mb size (all zeros)
-
-#   extract:  Extract most know archives with one command
-#   ---------------------------------------------------------
-extract () {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1     ;;
-            *.tar.gz)    tar xzf $1     ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar e $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xf $1      ;;
-            *.tbz2)      tar xjf $1     ;;
-            *.tgz)       tar xzf $1     ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)     echo ""$1" cannot be extracted via extract()" ;;
-        esac
-    else
-        echo ""$1" is not a valid file"
-    fi
-}
-
 #   ---------------------------
-#   2.  SEARCHING
+#   1.  SEARCHING
 #   ---------------------------
+
 alias qfind="find . -name "                 # qfind:    Quickly search for file
 ff () { /usr/bin/find . -name "$@" ; }      # ff:       Find file under the current directory
 ffs () { /usr/bin/find . -name "$@""*" ; }  # ffs:      Find file whose name starts with a given string
@@ -89,7 +49,7 @@ ffe () { /usr/bin/find . -name "*""$@" ; }  # ffe:      Find file whose name end
 
 
 #   ---------------------------
-#   3.  NETWORKING
+#   2.  NETWORKING
 #   ---------------------------
 
 alias myip="curl ip.appspot.com"                    # myip:         Public facing IP Address
@@ -103,45 +63,19 @@ alias ipInfo1="ipconfig getpacket en1"              # ipInfo1:      Get info on 
 alias openPorts="sudo lsof -i | grep LISTEN"        # openPorts:    All listening connections
 alias showBlocked="sudo ipfw list"                  # showBlocked:  All ipfw rules inc/ blocked IPs
 
-# SSH
-alias server="ssh reyco@linux-server"
-
-#   ii:  display useful host related informaton
-#   -------------------------------------------------------------------
-ii() {
-    echo -e "\nYou are logged on ${RED}$HOST"
-    echo -e "\nAdditionnal information:$NC " ; uname -a
-    echo -e "\n${RED}Users logged on:$NC " ; w -h
-    echo -e "\n${RED}Current date :$NC " ; date
-    echo -e "\n${RED}Machine stats :$NC " ; uptime
-    echo -e "\n${RED}Current network location :$NC " ; scselect
-    echo -e "\n${RED}Public facing IP Address :$NC " ;myip
-    #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
-    echo
-}
-
 #   -----------------------------
-#   4.  Development
+#   3.  Development
 #   -----------------------------
 # Create alias on all the folders in my workspace/code/homes directory to take me to that directory by just typing in folder
 for a in $(ls ~/develop/); do alias $a="cd ~/develop/$a"; done
 for a in $(ls ~/workspace/); do alias $a="cd ~/workspace/$a"; done
-# Tests
-alias node-test="node ./node_modules/lab/bin/lab -e development -v -m 1000"
-
-alias apacheedit="sudo edit /etc/httpd/httpd.conf"      # apacheEdit:       Edit httpd.conf
-alias apacherestart="sudo apachectl graceful"           # apacheRestart:    Restart Apache
-alias edithosts="sudo edit /etc/hosts"                  # editHosts:        Edit /etc/hosts file
-alias herr="tail /var/log/httpd/error_log"              # herr:             Tails HTTP error logs
-alias apachelogs="less +F /var/log/apache2/error_log"   # Apachelogs:   Shows apache error logs
-httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grabs headers from web page
 
 #   httpDebug:  Download a web page and show info on what took time
 #   -------------------------------------------------------------------
 httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
 
 #   -------------------------------
-#   5.  ENVIRONMENT CONFIGURATION
+#   4.  ENVIRONMENT CONFIGURATION
 #   -------------------------------
 
 #   Change Prompt
@@ -158,9 +92,6 @@ GIT_PS1_SHOWUNTRACKEDFILES="true"
 GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCOLORHINTS="true"
 
-
-# export PS1="\[\033[01;32m\] \[$(_returnLambda)\]λ \[\e[31;40m\]\W$(__git_ps1) \[\e[1;37m\]\$\[\033[00m\] "
-# export PS1="\[\e[0;37m\]________________________________________________________________________________\n| \[\e[0;32m\]\u:\w \[\e[0;34m\]\$(__git_ps1) \n\[\e[0m\]| => "
 export PS1="\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
 
 #   Set Paths
@@ -181,14 +112,6 @@ export EDITOR=/usr/bin/vim
 #   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
 #   ------------------------------------------------------------
 export BLOCKSIZE=1k
-
-#   Add color to terminal
-#   (this is all commented out as I use Mac Terminal Profiles)
-#   from http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
-#   ------------------------------------------------------------
-#   export CLICOLOR=1
-#   export LSCOLORS=ExFxBxDxCxegedabagacad
-
 
 #   Set History
 #   -----------------------------
@@ -216,7 +139,7 @@ mans () {
 
 
 #   ---------------------------
-#   1.  PROCESS MANAGEMENT
+#   5.  PROCESS MANAGEMENT
 #   ---------------------------
 
 #   findPid: find out the pid of a specified process
@@ -254,10 +177,8 @@ my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; }
 
 
 #   ---------------------------------------
-#   6.  SYSTEMS OPERATIONS & INFORMATION
+#   5.  SYSTEMS OPERATIONS & INFORMATION
 #   ---------------------------------------
-
-alias mountReadWrite="/sbin/mount -uw /"    # mountReadWrite:   For use when booted into single-user
 
 #   cleanupDS:  Recursively delete .DS_Store files
 #   -------------------------------------------------------------------
@@ -272,36 +193,3 @@ alias finderHideHidden="defaults write com.apple.finder ShowAllFiles FALSE"
 #   cleanupLS:  Clean up LaunchServices to remove duplicates in the "Open With" menu
 #   -----------------------------------------------------------------------------------
 alias cleanupLS="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
-
-#    screensaverDesktop: Run a screensaver on the Desktop
-#   -----------------------------------------------------------------------------------
-alias screensaverDesktop="/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine -background"
-
-#   -----------------------------
-#   7.  MacOS Only
-#   -----------------------------
-alias f="open -a Finder ./"                 # f:            Opens current directory in MacOS Finder
-alias DT="tee ~/Desktop/terminalOut.txt"    # DT:           Pipe content to file on MacOS Desktoptrash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
-
-#   cdf:  "Cd"s to frontmost window of MacOS Finder
-#   ------------------------------------------------------
-cdf () {
-    currFolderPath=$( /usr/bin/osascript <<EOT
-        tell application "Finder"
-            try
-        set currFolder to (folder of the front window as alias)
-            on error
-        set currFolder to (path to desktop folder as alias)
-            end try
-            POSIX path of currFolder
-        end tell
-EOT
-    )
-    echo "cd to \"$currFolderPath\""
-    cd "$currFolderPath"
-}
-
-#   spotlight: Search for a file using MacOS Spotlight"s metadata
-#   -----------------------------------------------------------
-spotlight () { mdfind "kMDItemDisplayName == "$@"wc"; }
