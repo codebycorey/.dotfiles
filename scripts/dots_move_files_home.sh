@@ -55,7 +55,7 @@ function full_dots_link_files_home () {
 #  $1 = project absolute path
 function basic_dots_link_files_home () {
 
-    files=(".bash_profile" ".personal_aliases" ".personal_scripts")
+    files=(".bash_profile" ".bash_aliases" ".bash_scripts")
 
     for file in ${files[@]}; do
         symlink_files_home $file $1
