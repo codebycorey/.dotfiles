@@ -8,6 +8,7 @@
 function command_exists() {
     type "$1" &> /dev/null ;
 }
+
 function moveMovie () {
 
     cp -R "$1" /data/store1/Movies
