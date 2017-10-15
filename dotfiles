@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-source ./test
-
-handlePid
 
 while true
 do

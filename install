@@ -7,40 +7,46 @@ set -o nounset
 
 main() {
 
+    local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
+    local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
+    local DOTS_BIN_DIR="${HOME}/bin"
+
     dots_has() {
         type "$1" > /dev/null 2>&1
     }
 
-    dots_install_dir() {
-        echo "${HOME}/.dotfiles"
-    }
-
-    dots_source() {
-        local DOTS_SOURCE_URL
-        DOTS_SOURCE_URL= 'https://github.com/rcodonnell/dotfiles.git'
-        echo "${DOTS_SOURCE_URL}"
-    }
-
-    dots_install_from_git() {
-        local INSTALL_DIR
-
-        INSTALL_DIR="$(dots_install_dir)"
-
-        if [[ -d "${INSTALL_DIR}/.git"]]; then
-            echo "Dots already installed in ${INSTALL_DIR}"
+    dots_download_from_git() {
+        echo "... Downloading dotfiles from git"
+        if [[ -d "${DOTS_INSTALL_DIR}/.git" ]]; then
+            echo "... Dots already installed in ${DOTS_INSTALL_DIR}"
         else
-            mkdir -p "${INSTALL_DIR}"
+            mkdir -p "${DOTS_INSTALL_DIR}"
+            command git clone "${DOTS_GIT_SOURCE}" -b "master" --depth=1 "${DOTS_INSTALL_DIR}" || {
+                echo >&2 'Failed to clone dotfile repo.'
+                exit 1
+            }
+        fi
+    }
 
+    dots_symlink_to_bin() {
+        echo "... Symlinking dotfile script to bin folder"
+        mkdir -p "${DOTS_BIN_DIR}"
+
+        if [ -L "${DOTS_BIN_DIR}/dotfiles" ]; then
+            echo "... Dots script already linked"
+        else
+            ln -s "${DOTS_INSTALL_DIR}/dotfiles" "${DOTS_BIN_DIR}/dotfiles"
         fi
     }
 
     dots_install() {
         if dots_has git; then
-            dots_install_from_git
+            dots_download_from_git
         else
             echo >&2 'You need git to install dots'
             exit 1
         fi
+        dots_symlink_to_bin
     }
 
     dots_install
