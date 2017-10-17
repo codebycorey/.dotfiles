@@ -10,6 +10,7 @@ main() {
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
     local DOTS_BIN_DIR="${HOME}/bin"
+    local DOTS_APP_FILENAME="dots"
 
     dots_has() {
         type "$1" > /dev/null 2>&1
@@ -32,7 +33,7 @@ main() {
         echo "... Symlinking dotfile script to bin folder"
         mkdir -p "${DOTS_BIN_DIR}"
 
-        if [ -L "${DOTS_BIN_DIR}/dotfiles" ]; then
+        if [ -L "${DOTS_BIN_DIR}/${DOTS_APP_FILENAME}" ]; then
             echo "... Dots script already linked"
         else
             ln -s "${DOTS_INSTALL_DIR}/dotfiles" "${DOTS_BIN_DIR}/dotfiles"
