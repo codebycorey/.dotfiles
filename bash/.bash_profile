@@ -5,7 +5,8 @@ DOT_BASH_FILES=(".bashrc" ".bash_aliases" ".bash_scripts" ".bash_system" ".bash_
 DOT_GIT_ADDONS=('.git-prompt.sh' ".git-completion.bash")
 
 dots_source_from_array() {
-    for file in $1[@]; do
+    FILES=("${@}")
+    for file in "${FILES[@]}"; do
         if [[ -s "${HOME}/${file}" ]]; then
             echo "Sourcing ${file}..."
             source "${HOME}/${file}"
@@ -15,11 +16,11 @@ dots_source_from_array() {
 
 #   Bash scripts
 #   -----------------------------------------------
-dots_source_from_array "${DOT_BASH_FILES}"
+dots_source_from_array "${DOT_BASH_FILES[@]}"
 
 #   Git scripts
 #   -----------------------------------------------
-dots_source_from_array "${DOT_GIT_ADDONS}"
+dots_source_from_array "${DOT_GIT_ADDONS[@]}"
 
 #   3rd Party Packages
 #   -----------------------------------------------
