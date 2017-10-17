@@ -23,10 +23,11 @@ main() {
             echo "... Dots already installed in ${DOTS_INSTALL_DIR}"
         else
             mkdir -p "${DOTS_INSTALL_DIR}"
-            command git clone "${DOTS_GIT_SOURCE}" -b "{DOTS_GIT_RELEASE_BRANCH}" --depth=1 "${DOTS_INSTALL_DIR}" || {
+            command git clone "${DOTS_GIT_SOURCE}" -b "${DOTS_GIT_RELEASE_BRANCH}" --depth=1 "${DOTS_INSTALL_DIR}" || {
                 echo >&2 'Failed to clone dotfile repo.'
                 exit 1
             }
+            command git --git-dir="${DOTS_INSTALL_DIR}"/.git --work-tree="${DOTS_INSTALL_DIR}" checkout -f --quiet "${DOTS_GIT_RELEASE_BRANCH}"
         fi
     }
 
@@ -37,7 +38,7 @@ main() {
         if [ -L "${DOTS_BIN_DIR}/${DOTS_APP_FILENAME}" ]; then
             echo "... Dots script already linked"
         else
-            ln -s "${DOTS_INSTALL_DIR}/dotfiles" "${DOTS_BIN_DIR}/dotfiles"
+            ln -s "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}" "${DOTS_BIN_DIR}/${DOTS_APP_FILENAME}"
         fi
     }
 
@@ -48,10 +49,11 @@ main() {
             echo >&2 'You need git to install dots'
             exit 1
         fi
-        dots_symlink_to_bin
+        # dots_symlink_to_bin
     }
-
+    rm -rf "${HOME}/.dotfiles" #TODO remove line
     dots_install
+    source "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
 }
 
 main

@@ -33,7 +33,7 @@ function symlink_files_home () {
         echo "~/$1 Already Exists:  Removing..."
         rm ~/$1
     fi
-    ln -s $2/dots/$1 ~/$1
+    ln -s $2/bash/$1 ~/$1
 
     if [ -L ~/$1 ]; then
         echo "Successfully created ~/$1"
@@ -45,8 +45,8 @@ function symlink_files_home () {
 #  Create symlink of all dot files to home directory
 #  $1 = project absolute path
 function full_dots_link_files_home () {
-    echo $(ls -A ./dots)
-    for file in $(ls -A ./dots); do
+    echo $(ls -A ./bash)
+    for file in $(ls -A ./bash); do
         symlink_files_home $file $1
     done
 }
@@ -55,7 +55,7 @@ function full_dots_link_files_home () {
 #  $1 = project absolute path
 function basic_dots_link_files_home () {
 
-    files=(".bash_profile" ".bash_aliases" ".bash_scripts")
+    files=(".bash_profile" ".bash_aliases" ".bash_scripts" ".bash_system")
 
     for file in ${files[@]}; do
         symlink_files_home $file $1
