@@ -10,8 +10,7 @@ main() {
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
     local DOTS_GIT_RELEASE_BRANCH="convert-dots-to-application"
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
-    local DOTS_BIN_DIR="${HOME}/bin"
-    local DOTS_APP_FILENAME="dots"
+    local DOTS_APP_FILENAME="dots.sh"
 
     dots_has() {
         type "$1" > /dev/null 2>&1
@@ -31,15 +30,12 @@ main() {
         fi
     }
 
-    dots_symlink_to_bin() {
-        echo "... Symlinking dotfile script to bin folder"
-        mkdir -p "${DOTS_BIN_DIR}"
+    dots_source_application() {
+        source "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
+    }
 
-        if [ -L "${DOTS_BIN_DIR}/${DOTS_APP_FILENAME}" ]; then
-            echo "... Dots script already linked"
-        else
-            ln -s "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}" "${DOTS_BIN_DIR}/${DOTS_APP_FILENAME}"
-        fi
+    dots_purge() {
+        rm -rf "${DOTS_INSTALL_DIR}"
     }
 
     dots_install() {
@@ -49,11 +45,11 @@ main() {
             echo >&2 'You need git to install dots'
             exit 1
         fi
-        # dots_symlink_to_bin
     }
-    rm -rf "${HOME}/.dotfiles" #TODO remove line
+
+    dots_purge
     dots_install
-    source "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
+    dots_source_application
 }
 
 main

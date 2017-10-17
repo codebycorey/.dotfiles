@@ -25,9 +25,9 @@ dots_source_from_array "${DOT_GIT_ADDONS[@]}"
 #   3rd Party Packages
 #   -----------------------------------------------
 #   Load Personal dots manager
-if [[ -s "${HOME}/.dotfiles/dots" ]]; then
+if [[ -s "${HOME}/.dotfiles/dots.sh" ]]; then
     echo "Sourcing dotfile manager..."
-    source "${HOME}/.dotfiles/dots"
+    source "${HOME}/.dotfiles/dots.sh"
 fi
 
 #   Load NVM to switch node versions quicker
