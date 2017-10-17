@@ -8,6 +8,7 @@ set -o nounset
 main() {
 
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
+    local DOTS_GIT_RELEASE_BRANCH="convert-dots-to-application"
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
     local DOTS_BIN_DIR="${HOME}/bin"
     local DOTS_APP_FILENAME="dots"
@@ -22,7 +23,7 @@ main() {
             echo "... Dots already installed in ${DOTS_INSTALL_DIR}"
         else
             mkdir -p "${DOTS_INSTALL_DIR}"
-            command git clone "${DOTS_GIT_SOURCE}" -b "master" --depth=1 "${DOTS_INSTALL_DIR}" || {
+            command git clone "${DOTS_GIT_SOURCE}" -b "{DOTS_GIT_RELEASE_BRANCH}" --depth=1 "${DOTS_INSTALL_DIR}" || {
                 echo >&2 'Failed to clone dotfile repo.'
                 exit 1
             }
