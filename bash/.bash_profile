@@ -2,7 +2,7 @@
 echo "Sourcing .bash_profile..."
 
 DOT_BASH_FILES=(".bashrc" ".bash_aliases" ".bash_scripts" ".bash_system" ".bash_work")
-DOT_GIT_ADDONS=('.git-prompt.sh' ".git-completion.bash")
+DOT_GIT_ADDONS=('.bash_git_prompt' ".bash_git_completion")
 
 dots_source_from_array() {
     FILES=("${@}")

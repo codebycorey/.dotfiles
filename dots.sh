@@ -4,60 +4,54 @@ dots() {
 
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
 
+    dots_install_git_bash() {
+        local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+        local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
+        local GIT_PROMPT_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+        local GIT_PROMPT_FILE_NAME=".bash_git_prompt'"
+        echo "=> Installing Git Completion..."
+        curl "${GIT_COMPLETION_URL}" > "${HOME}/${GIT_COMPLETION_FILE_NAME}"
+
+        echo "=> Installing Git Prompt"
+        curl "${GIT_PROMPT_URL}" > "${HOME}/${GIT_PROMPT_FILE_NAME}"
+    }
+
     dots_symlink_home() {
         local FILE_DIR="${1}"
         local FILE_NAME="${2}"
-        local BACKUPS_DIR="{DOTS_INSTALL_DIR}/backups"
-        # echo "${HOME}/${FILE_NAME}"
-        if [[ -f "${HOME}/${FILE_NAME}" ]]; then
-            mkdir -p "{BACKUPS_DIR}"
-            echo "${HOME}/${FILE_NAME}"
+        if [[ -e "${HOME}/${FILE_NAME}" ]]; then
+            echo "=> rm -rf ${HOME}/${FILE_NAME}"
+            rm -rf "${HOME}/${FILE_NAME}"
         fi
+        echo "=> ln -s ${FILE_DIR}/${FILE_NAME} ${HOME}/${FILE_NAME}"
+        ln -s "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
     }
 
     dots_install_bash() {
         local BASH_FILE_DIR="${DOTS_INSTALL_DIR}/bash"
-        local BASH_DOTS=(".bash_profile" ".bash_aliases" ".bash_scripts" ".bash_system")
-        for FILE in "${BASH_DOTS[@]}"; do
-            # echo "FILE: ${FILE}"
+        for FILE in $(ls -A "${BASH_FILE_DIR}"); do
             dots_symlink_home "${BASH_FILE_DIR}" "${FILE}"
         done
+        dots_install_git_bash
     }
 
-    dots_main_menu() {
-        clear
-        echo "==================================="
-        echo "Menu ---"
-        echo "==================================="
-        echo -e "\n\nWARNING!: THIS MIGHT OVERWRITE CURRENT DOT FILES!\n\n"
-        echo "1) install bash"
-        echo "2) install applications"
-        echo "q) exit"
-        echo -e "\n"
-        echo -e "Enter your selection \c"
-
-        read ANSWER
-        if [[ "${ANSWER}" = q ]]; then
-                break
+    dots_confirm_bash() {
+        echo "===================================="
+        echo "=>"
+        echo "=>WARNING! \nYOU WILL OVERWRITE CURRENT DOT FILES!"
+        echo "=>"
+        echo -e "=> Continue (yes/no)? \c"
+        read INPUT
+        if [[ "${INPUT}" = "yes" ]] || [[ "${INPUT}" = "Yes" ]] || [[ "${INPUT}" = "y" ]]; then
+            echo "yes"
+        else
+            exit
         fi
-        case "${ANSWER}" in
-            "1")
-                dots_install_bash
-            ;;
-            "2")
-                echo "You are applications..."
-            ;;
-        esac
-        echo -e "Enter return to continue \c"
-        read input
     }
 
     if [[ "${1}" = "bash" ]]; then
+        dots_confirm_bash
         dots_install_bash
-    else
-        while true; do
-            dots_main_menu
-        done
     fi
 }
 
