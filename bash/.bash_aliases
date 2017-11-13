@@ -9,8 +9,8 @@
 #  1.   Searching
 #  2.   Networking
 #  3.   Development
-#  4.   ENVIRONMENT CONFIGURATION
-#  5.   PROCESS MANAGEMENT
+#  4.   PROCESS MANAGEMENT
+#  5.   SYSTEMS OPERATIONS & INFORMATION
 #
 #  ---------------------------------------------------------------------------
 
@@ -74,62 +74,6 @@ for a in $(ls ~/workspace/); do alias $a="cd ~/workspace/$a"; done
 #   -------------------------------------------------------------------
 httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
 
-#   -------------------------------
-#   4.  ENVIRONMENT CONFIGURATION
-#   -------------------------------
-
-#   Change Prompt
-#   ------------------------------------------------------------
-PROMPT_COMMAND="RET=$?;"
-
-function _returnLambda {
-    if [[ $RET = 0 ]]; then echo -e "\033[01;32m"; else echo -e "\033[01;31m"; fi;
-}
-
-GIT_PS1_SHOWDIRTYSTATE="true"
-GIT_PS1_SHOWSTASHSTAT="true"
-GIT_PS1_SHOWUNTRACKEDFILES="true"
-GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_SHOWCOLORHINTS="true"
-
-export PS1="\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
-
-#   Set Paths
-#   ------------------------------------------------------------
-export PATH="$PATH:/usr/local/bin/"
-export PATH="$PATH:/usr/local/git/bin"
-export PATH="$PATH:/sw/bin/"
-export PATH="$PATH:/usr/local/"
-export PATH="$PATH:/usr/local/sbin"
-export PATH="$PATH:/usr/local/mysql/bin"
-export PATH="$PATH:~/.local/bin"
-
-#   Set Default Editor (change "Nano" to the editor of your choice)
-#   ------------------------------------------------------------
-export EDITOR=/usr/bin/vim
-
-#   Set default blocksize for ls, df, du
-#   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
-#   ------------------------------------------------------------
-export BLOCKSIZE=1k
-
-#   Set History
-#   -----------------------------
-#   don"t put duplicate lines in the history.
-HISTCONTROL=ignoredups:ignorespace
-
-#   append to the history file without overwriting it
-shopt -s histappend
-
-#   history length
-HISTSIZE=50000
-HISTFILESIZE=100000
-
-#   Set System-Wide Resources
-#   -----------------------------------------------------------
-#   sets it to unlimited
-ulimit -n 9999
-
 #   mans:   Search manpage given in agument "1" for term given in argument "2" (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.             Example: mans mplayer codec
 #   --------------------------------------------------------------------
@@ -137,9 +81,8 @@ mans () {
     man $1 | grep -iC2 --color=always $2 | less
 }
 
-
 #   ---------------------------
-#   5.  PROCESS MANAGEMENT
+#   4.  PROCESS MANAGEMENT
 #   ---------------------------
 
 #   findPid: find out the pid of a specified process

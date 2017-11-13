@@ -5,3 +5,6 @@
 
 # Vim Generated files
 .netrwhist
+
+#generated
+backups/

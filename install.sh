@@ -8,8 +8,9 @@ set -o nounset
 main() {
 
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
+    local DOTS_GIT_RELEASE_BRANCH="convert-dots-to-application"
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
-    local DOTS_BIN_DIR="${HOME}/bin"
+    local DOTS_APP_FILENAME="dots.sh"
 
     dots_has() {
         type "$1" > /dev/null 2>&1
@@ -21,22 +22,20 @@ main() {
             echo "... Dots already installed in ${DOTS_INSTALL_DIR}"
         else
             mkdir -p "${DOTS_INSTALL_DIR}"
-            command git clone "${DOTS_GIT_SOURCE}" -b "master" --depth=1 "${DOTS_INSTALL_DIR}" || {
+            command git clone "${DOTS_GIT_SOURCE}" -b "${DOTS_GIT_RELEASE_BRANCH}" --depth=1 "${DOTS_INSTALL_DIR}" || {
                 echo >&2 'Failed to clone dotfile repo.'
                 exit 1
             }
+            command git --git-dir="${DOTS_INSTALL_DIR}"/.git --work-tree="${DOTS_INSTALL_DIR}" checkout -f --quiet "${DOTS_GIT_RELEASE_BRANCH}"
         fi
     }
 
-    dots_symlink_to_bin() {
-        echo "... Symlinking dotfile script to bin folder"
-        mkdir -p "${DOTS_BIN_DIR}"
+    dots_source_application() {
+        source "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
+    }
 
-        if [ -L "${DOTS_BIN_DIR}/dotfiles" ]; then
-            echo "... Dots script already linked"
-        else
-            ln -s "${DOTS_INSTALL_DIR}/dotfiles" "${DOTS_BIN_DIR}/dotfiles"
-        fi
+    dots_purge() {
+        rm -rf "${DOTS_INSTALL_DIR}"
     }
 
     dots_install() {
@@ -46,10 +45,11 @@ main() {
             echo >&2 'You need git to install dots'
             exit 1
         fi
-        dots_symlink_to_bin
     }
 
+    dots_purge
     dots_install
+    dots_source_application
 }
 
 main
