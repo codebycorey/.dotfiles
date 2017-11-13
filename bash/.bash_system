@@ -20,7 +20,7 @@ GIT_PS1_SHOWUNTRACKEDFILES="true"
 GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCOLORHINTS="true"
 
-export PS1="\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
+export PS1="\u@\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
 
 #   Set Paths
 #   ------------------------------------------------------------
