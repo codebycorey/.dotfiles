@@ -8,7 +8,7 @@ set -o nounset
 main() {
 
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
-    local DOTS_GIT_RELEASE_BRANCH="convert-dots-to-application"
+    local DOTS_GIT_RELEASE_BRANCH="master"
     local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
     local DOTS_APP_FILENAME="dots.sh"
 
@@ -50,6 +50,9 @@ main() {
     dots_purge
     dots_install
     dots_source_application
+
+    # Install bash files
+    dots --bash
 }
 
 main

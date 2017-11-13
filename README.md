@@ -11,23 +11,15 @@ The install script will backup any of the files the project will overwrite. They
 ## Install
 
 #### Commands:
-Install
+Install Dots Application and bash files:
 ```
-git clone git@github.com:rcodonnell/dotfiles.git
+curl -o- https://raw.githubusercontent.com/rcodonnell/dotfiles/master/install.sh | bash
 ```
-Setup basic dotfiles: Profile, Aliases, Scripts
+dots help
 ```
-./setup.sh
+dots --help
 ```
-Setup all dotfiles
+install bash files
 ```
-./setup.sh full
-```
-Uninstall
-```
-./uninstall.sh
-```
-Restore backups
-```
-./uninstall restore
+dots --bash
 ```

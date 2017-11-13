@@ -27,12 +27,21 @@ dots() {
         ln -s "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
     }
 
+    dots_bash_exit_message() {
+        echo "=========================================="
+        echo "="
+        echo "=Open new terminal for file to take effect"
+        echo "="
+        echo "=========================================="
+    }
+
     dots_install_bash() {
         local BASH_FILE_DIR="${DOTS_INSTALL_DIR}/bash"
         for FILE in $(ls -A "${BASH_FILE_DIR}"); do
             dots_symlink_home "${BASH_FILE_DIR}" "${FILE}"
         done
         dots_install_git_bash
+        dots_bash_exit_message
     }
 
     dots_confirm_bash() {
@@ -49,10 +58,8 @@ dots() {
         fi
     }
 
-    if [[ "${1}" = "bash" ]]; then
+    if [[ "${1}" = "--bash" ]]; then
         dots_confirm_bash
         dots_install_bash
     fi
 }
-
-dots "${1}"
