@@ -50,9 +50,6 @@ main() {
     dots_purge
     dots_install
     dots_source_application
-
-    # Install bash files
-    dots bash
 }
 
 main

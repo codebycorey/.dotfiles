@@ -67,8 +67,12 @@ alias showBlocked="sudo ipfw list"                  # showBlocked:  All ipfw rul
 #   3.  Development
 #   -----------------------------
 # Create alias on all the folders in my workspace/code/homes directory to take me to that directory by just typing in folder
-for a in $(ls ~/develop/); do alias $a="cd ~/develop/$a"; done
-for a in $(ls ~/workspace/); do alias $a="cd ~/workspace/$a"; done
+if [[ -d "${HOME}/develop" ]]; then
+    for FOLDER in $(ls ${HOME}/develop/); do alias "${FOLDER}"="cd ${HOME}/develop/${FOLDER}"; done
+fi
+if [[ -d "${HOME}/workspace" ]]; then
+    for FOLDER in $(ls ${HOME}/workspace/); do alias "${FOLDER}"="cd ${HOME}/workspace/${FOLDER}"; done
+fi
 
 #   httpDebug:  Download a web page and show info on what took time
 #   -------------------------------------------------------------------

@@ -57,6 +57,7 @@ dots() {
             exit
         fi
     }
+
     echo "${1}"
     if [[ "${1}" = "bash" ]]; then
         dots_confirm_bash
