@@ -57,8 +57,8 @@ dots() {
             exit
         fi
     }
-
-    if [[ "${1}" = "--bash" ]]; then
+    echo "${1}"
+    if [[ "${1}" = "bash" ]]; then
         dots_confirm_bash
         dots_install_bash
     fi

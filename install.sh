@@ -52,7 +52,7 @@ main() {
     dots_source_application
 
     # Install bash files
-    dots --bash
+    dots bash
 }
 
 main
