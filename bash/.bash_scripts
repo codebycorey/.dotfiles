@@ -19,8 +19,8 @@ function moveMovie () {
 function fixTrackPad() {
     if command_exists xinput ; then
         echo "Fixing Trackpad..."
-        xinput --set-prop 11 "Synaptics Two-Finger Scrolling" 1 1
-        xinput --set-prop 11 "Synaptics Scrolling Distance" -114 -114
+        xinput --set-prop 11 "Natural Scrolling Enabled" 1
+        # xinput --set-prop 11 "Synaptics Scrolling Distance" -114 -114
     fi
 }
 

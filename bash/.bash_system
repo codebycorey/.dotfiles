@@ -56,4 +56,4 @@ HISTFILESIZE=100000
 #   Set System-Wide Resources
 #   -----------------------------------------------------------
 #   sets it to unlimited
-ulimit -n 9999
+# ulimit -n 9999
