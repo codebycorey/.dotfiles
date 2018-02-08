@@ -30,10 +30,6 @@ main() {
         fi
     }
 
-    dots_source_application() {
-        source "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
-    }
-
     dots_purge() {
         rm -rf "${DOTS_INSTALL_DIR}"
     }
@@ -49,7 +45,6 @@ main() {
 
     dots_purge
     dots_install
-    dots_source_application
 }
 
 main
