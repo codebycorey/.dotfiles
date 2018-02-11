@@ -164,13 +164,6 @@ bar {
         }
 }
 
-#default workspaces
-assign [class="discord"] $workspace4
-assign [class="Slack"] $workspace4
-
-# assign [class="Spotify"] $workspace10 # Currently a bug with spotify
-for_window [class="Spotify"] move to workspace $workspace10
-
 # key bindings
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
@@ -181,8 +174,5 @@ bindsym $mod+d exec rofi -show run -config '~/.i3/rofi.conf'
 
 # Startup
 exec --no-startup-id nm-applet
-exec --no-startup-id spotify
-exec --no-startup-id slack
-exec --no-startup-id discord
 exec --no-startup-id compton -f
 exec_always --no-startup-id feh  --bg-scale ~/Pictures/wallpaper.*
