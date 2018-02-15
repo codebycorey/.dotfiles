@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
+DOTS_INSTALL_DIR="${HOME}/.dotfiles"
 
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
@@ -56,10 +56,18 @@ dots_confirm_bash() {
     fi
 }
 
-echo "${1}"
+dots_install_script() {
+    local SCRIPT_NAME="${1}.sh"
+    local FOLDER="install-scripts"
+    source "./${FOLDER}/${SCRIPT_NAME}"
+}
+
 if [[ "${1}" = "bash" ]]; then
     dots_confirm_bash
     dots_install_bash
 fi
 
-
+if [[ "${1}" = "install" && -n "${2}" ]]; then
+    echo "args ${1} ${2}"
+    dots_install_script "${2}"
+fi
