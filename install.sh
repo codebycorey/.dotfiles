@@ -9,7 +9,7 @@ main() {
 
     local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
     local DOTS_GIT_RELEASE_BRANCH="master"
-    local DOTS_INSTALL_DIR="${HOME}/.dotfiles"
+    local DOTS_INSTALL_DIR="${HOME}/apps/dotfiles"
     local DOTS_APP_FILENAME="dots.sh"
 
     dots_has() {

@@ -152,7 +152,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color     
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks -c ~/.i3/i3blocks.conf
+        status_command i3blocks -c ${HOME}/.i3/i3blocks.conf
         position bottom
         colors {
             background  $bg-color
@@ -170,9 +170,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5 # decrease screen brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5 # increase screen brightness
-bindsym $mod+d exec rofi -show run -config '~/.i3/rofi.conf'
+bindsym $mod+d exec rofi -show run -config '${HOME}/.i3/rofi.conf'
 
 # Startup
 exec --no-startup-id nm-applet
 exec --no-startup-id compton -f
-exec_always --no-startup-id feh  --bg-scale ~/Pictures/wallpaper.*
+exec_always --no-startup-id feh  --bg-scale ${HOME}/Pictures/wallpaper.*
