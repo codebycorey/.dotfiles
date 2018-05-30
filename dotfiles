@@ -56,12 +56,27 @@ dots_confirm_bash() {
     fi
 }
 
-dots_install_script() {
-    local SCRIPT_NAME="${1}.sh"
-    local FOLDER="install-scripts"
-    local SCRIPT_PATH="./${FOLDER}/${SCRIPT_NAME}"
-    if [[ -f "${SCIPT_PATH}" ]]; then  
-        source "${SCRIPT_PATH}"
+dots_apps_install() {
+    local APP_NAME="${1}.sh"
+    local APP_DIR="${DOTS_INSTALL_DIR}/apps/"
+    local APP_PATH="${APP_DIR}${APP_NAME}"
+
+    if [[ -f "${APP_PATH}" ]]; then
+        source "${APP_PATH}"
+    fi
+}
+
+dots_config_install() {
+    local CONFIG_NAME="${1}"
+    local CONFIG_OPTION="${2:-"default"}"
+    local CONFIG_DIR="${DOTS_INSTALL_DIR}/configs/"
+    local CONFIG_PATH="${CONFIG_DIR}${CONFIG_NAME}"
+    if [[ -e "${CONFIG_PATH}" ]]; then
+        dots_symlink_home "${CONFIG_DIR}" "${CONFIG_NAME}"
+    fi
+    if [[ "${CONFIG_NAME}" = ".i3" ]]; then
+        echo "=> ln -sf ${CONFIG_PATH}/config.${CONFIG_OPTION} ${CONFIG_PATH}/config"
+        ln -sf "${CONFIG_PATH}/config.${CONFIG_OPTION}" "${CONFIG_PATH}/config"
     fi
 }
 
@@ -70,7 +85,12 @@ if [[ "${1}" = "bash" ]]; then
     dots_install_bash
 fi
 
-if [[ "${1}" = "install" && -n "${2}" ]]; then
+if [[ "${1}" = "apps" && -n "${2}" ]]; then
     echo "args ${1} ${2}"
-    dots_install_script "${2}"
+    dots_apps_install "${2}"
+fi
+
+if [[ "${1}" = "config" && -n "${2}" ]]; then
+    echo "args ${1} ${2} ${3}"
+    dots_config_install "${2}" "${3}"
 fi
