@@ -69,12 +69,8 @@ if [[ -d "${HOME}/develop" ]]; then
     for FOLDER in $(ls ${HOME}/develop/); do alias "${FOLDER}"="cd ${HOME}/develop/${FOLDER}"; done
 fi
 if [[ -d "${HOME}/workspace" ]]; then
-    for FOLDER in $(ls ${HOME}/workspace/); do alias "${FOLDER}"="cd ${HOME}/workspace/${FOLDER}"; done
+    for FOLDER in $(ls ${HOME}/workspace/); do alias "dev-${FOLDER}"="cd ${HOME}/workspace/${FOLDER}"; done
 fi
-
-#   httpDebug:  Download a web page and show info on what took time
-#   -------------------------------------------------------------------
-httpDebug () { /usr/bin/curl $@ -o /dev/null -w "dns: %{time_namelookup} connect: %{time_connect} pretransfer: %{time_pretransfer} starttransfer: %{time_starttransfer} total: %{time_total}\n" ; }
 
 #   mans:   Search manpage given in agument "1" for term given in argument "2" (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.             Example: mans mplayer codec

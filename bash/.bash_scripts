@@ -9,13 +9,6 @@ function command_exists() {
     type "${1}" &> /dev/null ;
 }
 
-function moveMovie () {
-
-    cp -R "${1}" /data/store1/Movies
-
-    chmod -R 755 /data/store1/Movies
-}
-
 function fixTrackPad() {
     if command_exists xinput ; then
         echo "Fixing Trackpad..."
