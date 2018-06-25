@@ -6,7 +6,7 @@ dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
     local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
     local GIT_PROMPT_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
-    local GIT_PROMPT_FILE_NAME=".bash_git_prompt'"
+    local GIT_PROMPT_FILE_NAME=".bash_git_prompt"
     echo "=> Installing Git Completion..."
     curl "${GIT_COMPLETION_URL}" > "${HOME}/${GIT_COMPLETION_FILE_NAME}"
 
@@ -93,4 +93,9 @@ fi
 if [[ "${1}" = "config" && -n "${2}" ]]; then
     echo "args ${1} ${2} ${3}"
     dots_config_install "${2}" "${3}"
+fi
+
+if [[ "${1}" = "update" ]]; then
+    echo "args ${1}"
+    curl -o- https://gitlab.com/Reyco/dotfiles/raw/master/install.sh | bash
 fi
