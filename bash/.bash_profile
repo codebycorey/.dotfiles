@@ -19,6 +19,6 @@ export BROWSER="firefox"
 
 #   Bash scripts
 #   -----------------------------------------------
-echo "${0}" | grep "bash$" > /dev/null && [[ -s "${HOME}/.bashrc" ]] && source "${$HOME}/.bashrc"
+echo "${0}" | grep "bash$" > /dev/null && [[ -s "${HOME}/.bashrc" ]] && source "${HOME}/.bashrc"
 
 clear
