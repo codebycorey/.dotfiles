@@ -10,17 +10,23 @@
 #   ------------------------------------------------------------
 PROMPT_COMMAND="history -a" # Store history immediately
 
-function _returnLambda {
-    if [[ $RET = 0 ]]; then echo -e "\033[01;32m"; else echo -e "\033[01;31m"; fi;
-}
-
 GIT_PS1_SHOWDIRTYSTATE="true"
 GIT_PS1_SHOWSTASHSTAT="true"
 GIT_PS1_SHOWUNTRACKEDFILES="true"
 GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCOLORHINTS="true"
 
-export PS1="\u@\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
+local BOLD="\[$(tput bold)\]"
+local RED="[$(tput setaf 1)\]"
+local YELLOW="\[$(tput setaf 3)\]"
+local GREEN="\[$(tput setaf 2)\]"
+local BLUE="\[$(tput setaf 4)\]"
+local PURPLE="\[$(tput setaf 5)\]"
+local WHITE="\[$(tput setaf 7)\]"
+local CLEARSETTINGS="\[$(tput sgr0)\]"
+
+# export PS1="\u@\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
+export PS1="${BOLD}${RED}[${YELLOW}\u${GREEN}@${BLUE}\h ${PURPLE}\W${GREEN}\$(__git_ps1)${RED}]${WHITE}\\$ ${CLEARSETTINGS}"
 
 #   Set History
 #   -----------------------------
