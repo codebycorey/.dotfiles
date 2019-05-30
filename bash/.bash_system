@@ -8,7 +8,7 @@
 
 #   Change Prompt
 #   ------------------------------------------------------------
-PROMPT_COMMAND="RET=$?;"
+PROMPT_COMMAND="history -a" # Store history immediately
 
 function _returnLambda {
     if [[ $RET = 0 ]]; then echo -e "\033[01;32m"; else echo -e "\033[01;31m"; fi;
@@ -22,36 +22,16 @@ GIT_PS1_SHOWCOLORHINTS="true"
 
 export PS1="\u@\h: \[\e[0;32m\]\W\[\e[0;34m\]\$(__git_ps1) \[\e[0m\]"
 
-#   Set Paths
-#   ------------------------------------------------------------
-# export PATH="$PATH:/usr/local/bin/"
-# export PATH="$PATH:/usr/local/git/bin"
-# export PATH="$PATH:/sw/bin/"
-# export PATH="$PATH:/usr/local/"
-# export PATH="$PATH:/usr/local/sbin"
-# export PATH="$PATH:/usr/local/mysql/bin"
-# export PATH="$PATH:~/.local/bin"
-
-#   Set Default Editor (change "Nano" to the editor of your choice)
-#   ------------------------------------------------------------
-export EDITOR=/usr/bin/vim
-
-#   Set default blocksize for ls, df, du
-#   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
-#   ------------------------------------------------------------
-export BLOCKSIZE=1k
-
 #   Set History
 #   -----------------------------
-#   don"t put duplicate lines in the history.
-HISTCONTROL=ignoredups:ignorespace
-
-#   append to the history file without overwriting it
-shopt -s histappend
-
-#   history length
-HISTSIZE=50000
+shopt -s histappend # append to the history file without overwriting it
+HISTCONTROL=ignoreboth # don't put duplicate lines in the history.
+HISTSIZE=50000 # history length
 HISTFILESIZE=100000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
 #   Set System-Wide Resources
 #   -----------------------------------------------------------

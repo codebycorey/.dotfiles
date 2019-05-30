@@ -38,13 +38,3 @@ function extract () {
         echo ""${1}" is not a valid file"
     fi
 }
-fixTrackPad
-
-function vpnr () {
-    sudo pvpn --disconnect
-    if [ -z "${PROTON_VPN_SERVER+x}" ]; then
-        echo "Proton VPN Server is not set"
-    else
-        sudo pvpn --c "${PROTON_VPN_SERVER}" udp
-    fi
-}

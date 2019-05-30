@@ -1,32 +1,24 @@
 #!/usr/bin/env bash
 echo "Sourcing .bash_profile..."
 
-DOT_BASH_FILES=(".bashrc" ".bash_aliases" ".bash_scripts" ".bash_system" ".bash_work" ".bash_sensitive")
-DOT_GIT_ADDONS=('.bash_git_prompt' ".bash_git_completion")
+#   Set Paths
+#   ------------------------------------------------------------
+# export PATH="$PATH:/usr/local/bin/"
+# export PATH="$PATH:/usr/local/git/bin"
+# export PATH="$PATH:/sw/bin/"
+# export PATH="$PATH:/usr/local/"
+# export PATH="$PATH:/usr/local/sbin"
+# export PATH="$PATH:/usr/local/mysql/bin"
+# export PATH="$PATH:~/.local/bin"
 
-function dots_source_from_array() {
-    FILES=("${@}")
-    for file in "${FILES[@]}"; do
-        if [[ -s "${HOME}/${file}" ]]; then
-            echo "Sourcing ${file}..."
-            source "${HOME}/${file}"
-        fi
-    done
-}
+#   Set Defaults
+#   ------------------------------------------------------------
+export EDITOR="vim"
+export TERMINAL="st"
+export BROWSER="firefox"
 
 #   Bash scripts
 #   -----------------------------------------------
-dots_source_from_array "${DOT_BASH_FILES[@]}"
+echo "${0}" | grep "bash$" > /dev/null && [[ -s "${HOME}/.bashrc" ]]
 
-#   Git scripts
-#   -----------------------------------------------
-dots_source_from_array "${DOT_GIT_ADDONS[@]}"
-
-#   3rd Party Packages
-#   -----------------------------------------------
-
-#   Load NVM to switch node versions quicker
-if [[ -s "${HOME}/.nvm/nvm.sh" ]]; then
-    echo "Sourcing .nvm..."
-    source "${HOME}/.nvm/nvm.sh"
-fi
+clear

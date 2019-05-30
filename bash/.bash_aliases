@@ -21,7 +21,8 @@
 alias cp="cp -iv"                           # Preferred "cp" implementation
 alias mv="mv -iv"                           # Preferred "mv" implementation
 alias mkdir="mkdir -pv"                     # Preferred "mkdir" implementation
-alias ll="ls -FGlAhp"                       # Preferred "ls" implementation
+alias ls='ls --color=auto'
+alias ll="ls -FGlAhp --color=auto"          # Preferred "ls" implementation
 alias less="less -FSRXc"                    # Preferred "less" implementation
 cd() { builtin cd "$@"; ll; }               # Always list directory contents upon "cd"
 alias ..="cd ../"                           # Go back 1 directory level
@@ -29,6 +30,9 @@ alias c="clear"                             # c:            Clear terminal displ
 alias which="type -all"                     # which:        Find executables
 alias path="echo -e ${PATH//:/\\n}"         # path:         Echo all executable Paths
 alias show_options="shopt"                  # Show_options: display bash options settings
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
 
