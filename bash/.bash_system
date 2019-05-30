@@ -17,7 +17,7 @@ GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCOLORHINTS="true"
 
 local BOLD="\[$(tput bold)\]"
-local RED="[$(tput setaf 1)\]"
+local RED="\[$(tput setaf 1)\]"
 local YELLOW="\[$(tput setaf 3)\]"
 local GREEN="\[$(tput setaf 2)\]"
 local BLUE="\[$(tput setaf 4)\]"
