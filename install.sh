@@ -7,7 +7,7 @@ set -o nounset
 
 main() {
 
-    local DOTS_GIT_SOURCE="https://gitlab.com/Reyco/dotfiles.git"
+    local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
     local DOTS_GIT_RELEASE_BRANCH="master"
     local DOTS_DOWNLOAD_DIR="${HOME}/apps/dotfiles"
     local DOTS_APP_FILENAME="dotfiles"
