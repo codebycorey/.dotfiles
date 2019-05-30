@@ -13,7 +13,7 @@ The install script will backup any of the files the project will overwrite. They
 #### Commands:
 Install Dots Application and bash files:
 ```
-curl -o- https://gitlab.com/Reyco/dotfiles/raw/master/install.sh | bash
+curl -o- https://raw.githubusercontent.com/rcodonnell/dotfiles/master/install.sh | bash
 ```
 dots help
 ```
