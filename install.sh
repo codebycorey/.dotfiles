@@ -59,7 +59,7 @@ main() {
 
     dots_purge
     dots_download
-    dots_install
+    # dots_install Currently doesn't work in bin folder
 }
 
 main
