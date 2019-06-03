@@ -15,7 +15,7 @@ echo "Sourcing .bash_profile..."
 #   ------------------------------------------------------------
 export EDITOR="vim"
 export TERMINAL="st"
-export BROWSER="firefox"
+export BROWSER="brave_browser"
 
 #   Bash scripts
 #   -----------------------------------------------
