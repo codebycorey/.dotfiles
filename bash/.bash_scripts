@@ -38,3 +38,14 @@ function extract () {
         echo ""${1}" is not a valid file"
     fi
 }
+
+# Discord randomly freezes. Instead of manually finding the pid and kill -9.
+# Find pid and kill in one command
+function rsd() {
+    echo "Finding Discord... Pids"
+    ps axf | grep "/snap/discord/93/usr/share/discord/Discord" | grep -v grep | awk '{print "kill -9 " $1}'
+    echo "Killing discord..."
+    ps axf | grep "/snap/discord/93/usr/share/discord/Discord" | grep -v grep | awk '{print "kill -9 " $1}' | sh
+    echo" Starting Discord..."
+    /snap/bin/discord > /dev/null 2&>1 &
+}
