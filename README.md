@@ -15,11 +15,11 @@ Install Dots Application and bash files:
 ```
 curl -o- https://raw.githubusercontent.com/rcodonnell/dotfiles/master/install.sh | bash
 ```
-dots help
+Current install location is located in `${HOME}/apps/dotfiles`
+
+Once dotfiles is installed, you can install bash files using
 ```
-dots --help
+~/apps/dotfiles/dotfiles bash
 ```
-install bash files
-```
-dots --bash
-```
+This will remove your current dotfiles if there are file collision.
+Todo: Add backup of old dotfiles before replacing/deleting.
