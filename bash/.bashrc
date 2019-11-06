@@ -34,4 +34,10 @@ if [[ -s "${HOME}/.nvm/nvm.sh" ]]; then
     source "${HOME}/.nvm/nvm.sh"
 fi
 
-clear 
+# Load AVN to auto switch node version if .node-version exists
+if [[ -s "${HOME}/.avn/bin/avn.sh" ]]; then
+    echo "Sourcing .avn..."
+    source "$HOME/.avn/bin/avn.sh"
+fi
+
+clear
