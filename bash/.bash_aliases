@@ -24,7 +24,7 @@ alias mkdir="mkdir -pv"                     # Preferred "mkdir" implementation
 alias ls='ls --color=auto'
 alias ll="ls -FGlAhp --color=auto"          # Preferred "ls" implementation
 alias less="less -FSRXc"                    # Preferred "less" implementation
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon "cd"
+cd() { builtin cd "$@" && ll; }             # Always list directory contents upon "cd"
 alias ..="cd ../"                           # Go back 1 directory level
 alias c="clear"                             # c:            Clear terminal display
 alias which="type -all"                     # which:        Find executables

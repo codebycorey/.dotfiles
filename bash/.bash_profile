@@ -14,8 +14,7 @@ echo "Sourcing .bash_profile..."
 #   Set Defaults
 #   ------------------------------------------------------------
 export EDITOR="vim"
-export TERMINAL="st"
-export BROWSER="brave_browser"
+export BROWSER="firefox"
 
 #   Bash scripts
 #   -----------------------------------------------
