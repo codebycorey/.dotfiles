@@ -50,6 +50,12 @@ function rsd() {
     /snap/bin/discord > /dev/null 2&>1 &
 }
 
+# Toggle my wireguard connection
 function wireguard() {
     wg-quick "${1}" wg0
+}
+
+# Force set brightness since I cannot get xbrightness to work on laptop
+function bright() {
+    echo $1 | sudo tee /sys/class/backlight/intel_backlight/brightness
 }
