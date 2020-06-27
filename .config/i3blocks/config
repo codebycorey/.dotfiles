@@ -26,13 +26,9 @@ label=MEM
 interval=30
 
 [battery]
-label=BAT
+markup=pango
 instance=0
-interval=30
-
-[battery]
-instance=1
-interval=30
+interval=10
 
 [time]
 command=date '+%Y-%m-%d %r'

@@ -11,3 +11,4 @@ backups/
 
 # App generated
 ./configs/.i3/config
+.uuid
