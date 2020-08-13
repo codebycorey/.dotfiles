@@ -7,11 +7,9 @@ set -o nounset
 
 main() {
 
-    local DOTS_GIT_SOURCE="https://github.com/rcodonnell/dotfiles.git"
+    local DOTS_GIT_SOURCE="git@github.com:CodeByCorey/dotfiles.git"
     local DOTS_GIT_RELEASE_BRANCH="master"
-    local DOTS_DOWNLOAD_DIR="${HOME}/apps/dotfiles"
-    local DOTS_APP_FILENAME="dotfiles"
-    local DOTS_INSTALL_DIR="/usr/bin"
+    local DOTS_DOWNLOAD_DIR="${HOME}/.dotfiles"
 
     dots_has() {
         type "$1" > /dev/null 2>&1
@@ -25,9 +23,9 @@ main() {
             mkdir -p "${DOTS_DOWNLOAD_DIR}"
             command git clone "${DOTS_GIT_SOURCE}" -b "${DOTS_GIT_RELEASE_BRANCH}" --depth=1 "${DOTS_DOWNLOAD_DIR}" || {
                 echo >&2 '=> Failed to clone dotfile repo.'
+                echo >&2 '=> Make sure you have ssh keys setuo for github'
                 exit 1
             }
-            command git --git-dir="${DOTS_DOWNLOAD_DIR}"/.git --work-tree="${DOTS_DOWNLOAD_DIR}" checkout -f --quiet "${DOTS_GIT_RELEASE_BRANCH}"
         fi
     }
 
@@ -35,10 +33,6 @@ main() {
         echo "=> Purging Previous downloaded version"
         echo "=> rm -rf "${DOTS_DOWNLOAD_DIR}""
         rm -rf "${DOTS_DOWNLOAD_DIR}"
-        if [[ -e "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}" ]]; then
-            echo "=> rm "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}""
-            sudo rm "${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
-        fi
     }
 
     dots_download() {
@@ -50,16 +44,8 @@ main() {
         fi
     }
 
-    dots_install() {
-        echo "=> Installing dotfile app into /usr/bin"
-        local DOTS_INSTALL_APP="${DOTS_INSTALL_DIR}/${DOTS_APP_FILENAME}"
-        echo "=> ln -sf "${DOTS_DOWNLOAD_DIR}/${DOTS_APP_FILENAME}" "${DOTS_INSTALL_APP}""
-        sudo ln -sf "${DOTS_DOWNLOAD_DIR}/${DOTS_APP_FILENAME}" "${DOTS_INSTALL_APP}"
-    }
-
     dots_purge
     dots_download
-    # dots_install Currently doesn't work in bin folder
 }
 
 main

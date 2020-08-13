@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTS_INSTALL_DIR="${HOME}/apps/dotfiles"
+DOTS_INSTALL_DIR="${HOME}/.dotfiles"
 
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
@@ -97,5 +97,5 @@ fi
 
 if [[ "${1}" = "update" ]]; then
     echo "args ${1}"
-    curl -o- https://gitlab.com/Reyco/dotfiles/raw/master/install.sh | bash
+    git pull
 fi
