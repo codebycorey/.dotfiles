@@ -2,6 +2,17 @@
 
 DOTS_INSTALL_DIR="${HOME}/.dotfiles"
 
+dots_symlink_home() {
+    local FILE_DIR="${1}"
+    local FILE_NAME="${2}"
+    if [[ -e "${HOME}/${FILE_NAME}" ]]; then
+        echo "=> rm -rf ${HOME}/${FILE_NAME}"
+        rm -rf "${HOME}/${FILE_NAME}"
+    fi
+    echo "=> ln -s ${FILE_DIR}/${FILE_NAME} ${HOME}/${FILE_NAME}"
+    ln -s "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
+}
+
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
     local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
@@ -14,15 +25,14 @@ dots_install_git_bash() {
     curl "${GIT_PROMPT_URL}" > "${HOME}/${GIT_PROMPT_FILE_NAME}"
 }
 
-dots_symlink_home() {
-    local FILE_DIR="${1}"
-    local FILE_NAME="${2}"
-    if [[ -e "${HOME}/${FILE_NAME}" ]]; then
-        echo "=> rm -rf ${HOME}/${FILE_NAME}"
-        rm -rf "${HOME}/${FILE_NAME}"
-    fi
-    echo "=> ln -s ${FILE_DIR}/${FILE_NAME} ${HOME}/${FILE_NAME}"
-    ln -s "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
+dots_install_fonts() {
+    local FONTS_FOLDER=".fonts"
+    local FONTS_LOCATION="${DOTS_INSTALL_DIR}/system/${FONT_FOLDER}"
+    dots_symlink_home ${FONTS_LOCATION} ${FONTS_FOLDER}
+}
+
+dots_install_starship() {
+    bash <(curl -fsSL https://starship.rs/install.sh)
 }
 
 dots_bash_exit_message() {
@@ -98,4 +108,10 @@ fi
 if [[ "${1}" = "update" ]]; then
     echo "args ${1}"
     git pull
+fi
+
+if [[ "${1}" = "full" ]]; then
+    dots_confirm_bash
+    dots_install_bash
+    dots_install_fonts
 fi
