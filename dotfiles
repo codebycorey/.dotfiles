@@ -10,7 +10,7 @@ dots_symlink_home() {
         rm -rf "${HOME}/${FILE_NAME}"
     fi
     echo "=> ln -s ${FILE_DIR}/${FILE_NAME} ${HOME}/${FILE_NAME}"
-    ln -s "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
+    ln -sf "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
 }
 
 dots_install_git_bash() {
@@ -27,7 +27,8 @@ dots_install_git_bash() {
 
 dots_install_fonts() {
     local FONTS_FOLDER=".fonts"
-    local FONTS_LOCATION="${DOTS_INSTALL_DIR}/system/${FONT_FOLDER}"
+    local FONTS_LOCATION="${DOTS_INSTALL_DIR}/system"
+    echo $FONTS_LOCATION
     dots_symlink_home ${FONTS_LOCATION} ${FONTS_FOLDER}
 }
 
@@ -49,7 +50,6 @@ dots_install_bash() {
         dots_symlink_home "${BASH_FILE_DIR}" "${FILE}"
     done
     dots_install_git_bash
-    dots_bash_exit_message
 }
 
 dots_confirm_bash() {
@@ -93,6 +93,7 @@ dots_config_install() {
 if [[ "${1}" = "bash" ]]; then
     dots_confirm_bash
     dots_install_bash
+    dots_bash_exit_message
 fi
 
 if [[ "${1}" = "apps" && -n "${2}" ]]; then
@@ -114,4 +115,8 @@ if [[ "${1}" = "full" ]]; then
     dots_confirm_bash
     dots_install_bash
     dots_install_fonts
+    dots_install_starship
+    dots_bash_exit_message
 fi
+
+dots_install_fonts

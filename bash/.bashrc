@@ -40,4 +40,6 @@ if [[ -s "${HOME}/.avn/bin/avn.sh" ]]; then
     source "$HOME/.avn/bin/avn.sh"
 fi
 
+eval "$(starship init bash)"
+
 clear
