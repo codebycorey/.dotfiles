@@ -13,6 +13,15 @@ dots_symlink_home() {
     ln -sf "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
 }
 
+dots_create_base_folders() {
+    mkdir -p "${HOME}/apps/bin"
+    mkdir -p "${HOME}/workspace"
+}
+
+dots_clone_essential_repos() {
+    git clone "git@github.com:CodeByCorey/notes.git" "${HOME}/workspace/notes"
+}
+
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
     local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
@@ -33,7 +42,11 @@ dots_install_fonts() {
 }
 
 dots_install_starship() {
+    local FILE="starship.toml"
+    local INSTALL_LOCATION="${DOTS_INSTALL_DIR}"
+    local WORKING_LOCATION=".config/${FILE}"
     bash <(curl -fsSL https://starship.rs/install.sh)
+    dots_symlink_home ${INSTALL_LOCATION} ${WORKING_LOCATION}
 }
 
 dots_bash_exit_message() {
@@ -118,5 +131,3 @@ if [[ "${1}" = "full" ]]; then
     dots_install_starship
     dots_bash_exit_message
 fi
-
-dots_install_fonts
