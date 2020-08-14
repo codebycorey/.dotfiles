@@ -22,6 +22,16 @@ dots_clone_essential_repos() {
     git clone "git@github.com:CodeByCorey/notes.git" "${HOME}/workspace/notes"
 }
 
+dots_i3_config() {
+    local I3_FILE="i3"
+    local I3BLOCKS_FILE="i3blocks"
+    local FOLDER_LOCATION="${DOTS_INSTALL_DIR}"
+    local WORKING_I3_LOCATION=".config/${I3_FILE}"
+    local WORKING_I3BLOCKS_LOCATION=".config/${I3BLOCKS_FILE}"
+    dots_symlink_home ${FOLDER_LOCATION} ${WORKING_I3_LOCATION}
+    dots_symlink_home ${FOLDER_LOCATION} ${WORKING_I3BLOCKS_LOCATION}
+}
+
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
     local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
@@ -130,4 +140,8 @@ if [[ "${1}" = "full" ]]; then
     dots_install_fonts
     dots_install_starship
     dots_bash_exit_message
+fi
+
+if [[ "${1}" = "i3" ]]; then
+    dots_i3_config
 fi
