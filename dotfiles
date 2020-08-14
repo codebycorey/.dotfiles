@@ -49,6 +49,7 @@ dots_install_fonts() {
     local FONTS_LOCATION="${DOTS_INSTALL_DIR}/system"
     echo $FONTS_LOCATION
     dots_symlink_home ${FONTS_LOCATION} ${FONTS_FOLDER}
+    fc-cache -f -v
 }
 
 dots_install_starship() {
