@@ -7,7 +7,6 @@
 
 # Add additional paths
 export PATH="${PATH}:${HOME}/.local/bin"
-export PATH="${PATH}:${HOME}/apps/bin"
 
 #   Change Prompt
 #   ------------------------------------------------------------

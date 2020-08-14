@@ -28,7 +28,7 @@ cd() { builtin cd "$@" && ll; }             # Always list directory contents upo
 alias ..="cd ../"                           # Go back 1 directory level
 alias c="clear"                             # c:            Clear terminal display
 alias which="type -all"                     # which:        Find executables
-alias path="echo -e ${PATH//:/\\n}"         # path:         Echo all executable Paths
+alias path="echo -e ${PATH}"         # path:         Echo all executable Paths
 alias show_options="shopt"                  # Show_options: display bash options settings
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -75,7 +75,8 @@ fi
 if [[ -d "${HOME}/workspace" ]]; then
     for FOLDER in $(ls ${HOME}/workspace/); do alias "dev-${FOLDER}"="cd ${HOME}/workspace/${FOLDER}"; done
 fi
-alias code-dots="code ~/.dotfiles"
+alias code-dots="code ${HOME}/.dotfiles"
+alias dev-dots="cd ${HOME}/.dotfiles"
 
 #   mans:   Search manpage given in agument "1" for term given in argument "2" (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.             Example: mans mplayer codec

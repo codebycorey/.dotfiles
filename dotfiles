@@ -14,7 +14,7 @@ dots_symlink_home() {
 }
 
 dots_create_base_folders() {
-    mkdir -p "${HOME}/apps/bin"
+    mkdir -p "${HOME}/.local/bin"
     mkdir -p "${HOME}/workspace"
 }
 
