@@ -7,6 +7,12 @@
 
 # Add additional paths
 export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="${PATH}:${HOME}/.cargo/bin"
+
+#   Default Applications
+
+export EDITOR="vim"
+export TERMINAL="kitty"
 
 #   Change Prompt
 #   ------------------------------------------------------------
