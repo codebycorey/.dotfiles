@@ -1,0 +1,5 @@
+i3-wm.mod: Mod1
+i3-wm.alt: Mod4
+i3-wm.program.launcher.app: rofi -show run -theme $rofiTheme
+i3-wm.program.launcher.cmd: rofi -show drun -theme $rofiTheme
+i3-wm.gaps.inner.size: 15
