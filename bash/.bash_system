@@ -6,8 +6,10 @@
 #  ---------------------------------------------------------------------------
 
 # Add additional paths
-export PATH="${PATH}:${HOME}/.local/bin"
-export PATH="${PATH}:${HOME}/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.volta/bin"
+
 
 #   Default Applications
 export EDITOR="vim"
@@ -15,7 +17,6 @@ export TERMINAL="kitty"
 
 # Turn termianl bell off
 bind 'set bell-style none'
-
 
 #   Change Prompt
 #   ------------------------------------------------------------

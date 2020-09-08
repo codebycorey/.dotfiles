@@ -28,18 +28,4 @@ dots_source_from_array "${DOT_BASH_FILES[@]}"
 #   -----------------------------------------------
 dots_source_from_array "${DOT_GIT_ADDONS[@]}"
 
-#   Load NVM to switch node versions quicker
-if [[ -s "${HOME}/.nvm/nvm.sh" ]]; then
-    echo "Sourcing .nvm..."
-    source "${HOME}/.nvm/nvm.sh"
-fi
-
-# Load AVN to auto switch node version if .node-version exists
-if [[ -s "${HOME}/.avn/bin/avn.sh" ]]; then
-    echo "Sourcing .avn..."
-    source "$HOME/.avn/bin/avn.sh"
-fi
-
 eval "$(starship init bash)"
-
-clear
