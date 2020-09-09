@@ -3,4 +3,5 @@ i3-wm.alt: Mod4
 i3-wm.program.launcher.app: rofi -show run -theme $rofiTheme
 i3-wm.program.launcher.cmd: rofi -show drun -theme $rofiTheme
 i3-wm.gaps.inner.size: 15
-gnome.wallpaper: ~/Pictures/Wallpapers/wallpaper.jpg
+i3-wm.bar.trayoutput: primary
+gnome.wallpaper: ~/.dotfiles/wallpapers/wallpaper.jpg
