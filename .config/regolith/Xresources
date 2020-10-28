@@ -4,4 +4,5 @@ i3-wm.program.launcher.app: rofi -show run -theme $rofiTheme
 i3-wm.program.launcher.cmd: rofi -show drun -theme $rofiTheme
 i3-wm.gaps.inner.size: 15
 i3-wm.bar.trayoutput: primary
+i3-wm.gaps.focus_follows_mouse: yes
 gnome.wallpaper: ~/.dotfiles/wallpapers/wallpaper.jpg

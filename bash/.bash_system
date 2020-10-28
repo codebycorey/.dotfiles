@@ -13,7 +13,7 @@ export PATH="$PATH:$HOME/.volta/bin"
 
 #   Default Applications
 export EDITOR="vim"
-export TERMINAL="kitty"
+# export TERMINAL="kitty"
 
 # Turn termianl bell off
 bind 'set bell-style none'
