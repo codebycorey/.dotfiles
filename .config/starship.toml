@@ -17,7 +17,7 @@ disabled = false
 show_always = true
 
 [directory]
-prefix = ""
+format = ""
 style = "blue"
 
 [git_branch]
