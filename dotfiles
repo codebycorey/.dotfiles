@@ -148,6 +148,7 @@ if [[ "${1}" = "update" ]]; then
 fi
 
 if [[ "${1}" = "full" ]]; then
+    dots_create_base_folders
     dots_confirm_bash
     dots_install_bash
     dots_install_fonts
