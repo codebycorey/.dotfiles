@@ -56,7 +56,7 @@ dots_install_starship() {
     local FILE="starship.toml"
     local INSTALL_LOCATION="${DOTS_INSTALL_DIR}"
     local WORKING_LOCATION=".config/${FILE}"
-    bash <(curl -fsSL https://starship.rs/install.sh)
+    curl -fsSL https://starship.rs/install.sh | bash -s -- -b "${HOME}/.local/bin"
     dots_symlink_home ${INSTALL_LOCATION} ${WORKING_LOCATION}
 }
 
