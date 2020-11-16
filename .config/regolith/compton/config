@@ -39,7 +39,10 @@ glx-copy-from-front = false;
 # Probably could improve performance on rapid window content changes, but is known to break things on some drivers (LLVMpipe).
 # Recommended if it works.
 glx-no-rebind-pixmap = true;
-use-damage = false;
+use-damage = true;
+
+# On GLX backend, bad synchronization between X Render and GLX may lead to some sort of lagging effect (especially with nvidia-drivers). Use --xrender-sync-fence to deal with it.
+xrender-sync-fence = true;
 
 
 #################################
@@ -211,13 +214,13 @@ wintypes:
     };
     dock = { shadow = true; }
     dnd = { shadow = false; }
-    popup_menu = {
-        opacity = 1.0;
+    popup_menu = { 
+        opacity = 1.0; 
         shadow = false;
         fade = false;
     }
-    dropdown_menu = {
-        opacity = 1.0;
+    dropdown_menu = { 
+        opacity = 1.0; 
         fade = false;
     }
 };

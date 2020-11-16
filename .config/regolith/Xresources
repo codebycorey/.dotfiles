@@ -1,8 +1,15 @@
 i3-wm.mod: Mod1
 i3-wm.alt: Mod4
+i3-wm.binding.file_search: Mod4
+i3-wm.binding.ws_next2: Mod4+Right
+i3-wm.binding.ws_prev2: Mod4+Left
+i3-wm.binding.take_next_free: Mod4+grave
+i3-wm.binding.look_selector: Mod4+l
+
 i3-wm.program.launcher.app: rofi -show run -theme $rofiTheme
 i3-wm.program.launcher.cmd: rofi -show drun -theme $rofiTheme
-i3-wm.gaps.inner.size: 15
-i3-wm.bar.trayoutput: primary
 i3-wm.gaps.focus_follows_mouse: yes
 gnome.wallpaper: ~/.dotfiles/wallpapers/wallpaper.jpg
+
+i3-wm.font: pango:DejaVuSansMono Nerd Font Mono 13
+i3-wm.bar.font: pango:DejaVuSansMono Nerd Font Mono 13, Material Design Icons
