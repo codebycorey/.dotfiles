@@ -5,6 +5,9 @@
 #
 #  ---------------------------------------------------------------------------
 
+# Add GPG key
+export GPG_TTY=$(tty)
+
 # Add additional paths
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"

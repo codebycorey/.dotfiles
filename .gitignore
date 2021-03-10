@@ -16,3 +16,6 @@ backups/
 # OS Generated
 flags/
 ui-fingerprint
+
+# .zsh
+.zcompdump
