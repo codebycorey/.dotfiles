@@ -1,71 +1,55 @@
 #!/usr/bin/env bash
 
-DOTS_INSTALL_DIR="${HOME}/.dotfiles"
+DOTS_INSTALL_DIR="$HOME/.dotfiles"
 
 dots_symlink_home() {
     local FILE_DIR="${1}"
     local FILE_NAME="${2}"
-    if [[ -e "${HOME}/${FILE_NAME}" ]]; then
-        echo "=> rm -rf ${HOME}/${FILE_NAME}"
-        rm -rf "${HOME}/${FILE_NAME}"
+    if [[ -e "$HOME/$FILE_NAME" ]]; then
+        echo "=> rm -rf $HOME/$FILE_NAME"
+        rm -rf "$HOME/$FILE_NAME"
     fi
-    echo "=> ln -s ${FILE_DIR}/${FILE_NAME} ${HOME}/${FILE_NAME}"
-    ln -sf "${FILE_DIR}/${FILE_NAME}" "${HOME}/${FILE_NAME}"
+    echo "=> ln -s ${FILE_DIR}/$FILE_NAME $HOME/$FILE_NAME"
+    ln -sf "${FILE_DIR}/$FILE_NAME" "$HOME/$FILE_NAME"
 }
 
 dots_create_base_folders() {
-    mkdir -p "${HOME}/.local/bin"
-    mkdir -p "${HOME}/workspace"
+    mkdir -p "$HOME/.local/bin"
+    mkdir -p "$HOME/workspace"
 }
 
 dots_clone_essential_repos() {
-    git clone "git@github.com:CodeByCorey/notes.git" "${HOME}/workspace/notes"
+    git clone "git@github.com:CodeByCorey/notes.git" "$HOME/workspace/notes"
 }
 
 dots_i3_config() {
-    local I3_FILE="i3"
-    local I3BLOCKS_FILE="i3blocks"
-    local FOLDER_LOCATION="${DOTS_INSTALL_DIR}"
-    local WORKING_I3_LOCATION=".config/${I3_FILE}"
-    local WORKING_I3BLOCKS_LOCATION=".config/${I3BLOCKS_FILE}"
-    dots_symlink_home ${FOLDER_LOCATION} ${WORKING_I3_LOCATION}
-    dots_symlink_home ${FOLDER_LOCATION} ${WORKING_I3BLOCKS_LOCATION}
+    dots_symlink_home $DOTS_INSTALL_DIR ".config/i3"
+    dots_symlink_home $DOTS_INSTALL_DIR ".config/i3blocks"
 }
 
 dots_install_git_bash() {
     local GIT_COMPLETION_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
-    local GIT_COMPLETION_FILE_NAME=".bash_git_completion"
     local GIT_PROMPT_URL="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
-    local GIT_PROMPT_FILE_NAME=".bash_git_prompt"
     echo "=> Installing Git Completion..."
-    curl "${GIT_COMPLETION_URL}" > "${HOME}/${GIT_COMPLETION_FILE_NAME}"
+    curl "$GIT_COMPLETION_URL" > "$HOME/.bash_git_completion"
 
     echo "=> Installing Git Prompt"
-    curl "${GIT_PROMPT_URL}" > "${HOME}/${GIT_PROMPT_FILE_NAME}"
+    curl "$GIT_PROMPT_URL" > "$HOME/.bash_git_prompt"
 }
 
 dots_install_fonts() {
-    local FONTS_FOLDER=".fonts"
-    local FONTS_LOCATION="${DOTS_INSTALL_DIR}/system"
-    echo $FONTS_LOCATION
-    dots_symlink_home ${FONTS_LOCATION} ${FONTS_FOLDER}
+    dots_symlink_home $DOTS_INSTALL_DIR ".fonts"
     fc-cache -f -v
 }
 
 dots_install_starship() {
-    local FILE="starship.toml"
-    local INSTALL_LOCATION="${DOTS_INSTALL_DIR}"
-    local WORKING_LOCATION=".config/${FILE}"
-    curl -fsSL https://starship.rs/install.sh | bash -s -- -b "${HOME}/.local/bin"
-    dots_symlink_home ${INSTALL_LOCATION} ${WORKING_LOCATION}
+    curl -fsSL https://starship.rs/install.sh | bash -s -- -b "$HOME/.local/bin"
+    dots_symlink_home $DOTS_INSTALL_DIR ".config/starship.toml"
 }
 
 dots_install_kitty() {
-    local FILE="kitty"
-    local INSTALL_LOCATION="${DOTS_INSTALL_DIR}"
-    local WORKING_LOCATION=".config/${FILE}"
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh
-    dots_symlink_home ${INSTALL_LOCATION} ${WORKING_LOCATION}
+    dots_symlink_home $DOTS_INSTALL_DIR ".config/kitty"
 }
 
 dots_install_volta() {
@@ -81,53 +65,59 @@ dots_bash_exit_message() {
 }
 
 dots_install_bash() {
-    local BASH_FILE_DIR="${DOTS_INSTALL_DIR}/bash"
-    for FILE in $(ls -A "${BASH_FILE_DIR}"); do
-        dots_symlink_home "${BASH_FILE_DIR}" "${FILE}"
+    local BASH_FILE_DIR="$DOTS_INSTALL_DIR/.config/shell"
+    for FILE in $(ls -A "$BASH_FILE_DIR"); do
+        dots_symlink_home "$BASH_FILE_DIR" "$FILE"
     done
     dots_install_git_bash
 }
 
-dots_confirm_bash() {
+dots_install_zsh() {
+    dots_symlink_home $DOTS_INSTALL_DIR ".config/zsh"
+    dots_symlink_home "$DOTS_INSTALL_DIR/home" ".zshenv"
+}
+
+dots_confirm() {
     echo "===================================="
     echo "=>"
-    echo "=>WARNING! \nYOU WILL OVERWRITE CURRENT DOT FILES!"
+    echo "=> WARNING! \nYOU WILL OVERWRITE CURRENT DOT FILES!"
     echo "=>"
     echo -e "=> Continue (yes/no)? \c"
     read INPUT
-    if [[ "${INPUT}" = "yes" ]] || [[ "${INPUT}" = "Yes" ]] || [[ "${INPUT}" = "y" ]]; then
+    if [[ "$INPUT" = "yes" ]] || [[ "$INPUT" = "Yes" ]] || [[ "$INPUT" = "y" ]]; then
         echo "yes"
     else
         exit
     fi
 }
 
-dots_apps_install() {
-    local APP_NAME="${1}.sh"
-    local APP_DIR="${DOTS_INSTALL_DIR}/apps/"
-    local APP_PATH="${APP_DIR}${APP_NAME}"
+dots_choose_shell_env() {
+    echo "===================================="
+    echo "=>"
+    echo "=> Do you want to install bash or zsh dotfiles?"
+    echo "=>"
+    echo -e "=> type 'bash' or 'zsh' \c"
+    read INPUT
+    if [[ "$INPUT" = "bash" ]]; then
+        dots_install_bash
+    elif [[ "$INPUT" = "zsh" ]]; then
+        dots_install_zsh
+    else
+        exit
+    fi
+}
 
+dots_apps_install() {
+    local APP_PATH="$DOTS_INSTALL_DIR/.local/${1}.sh"
     if [[ -f "${APP_PATH}" ]]; then
         source "${APP_PATH}"
     fi
 }
 
-dots_config_install() {
-    local CONFIG_NAME="${1}"
-    local CONFIG_OPTION="${2:-"default"}"
-    local CONFIG_DIR="${DOTS_INSTALL_DIR}/configs/"
-    local CONFIG_PATH="${CONFIG_DIR}${CONFIG_NAME}"
-    if [[ -e "${CONFIG_PATH}" ]]; then
-        dots_symlink_home "${CONFIG_DIR}" "${CONFIG_NAME}"
-    fi
-    if [[ "${CONFIG_NAME}" = ".i3" ]]; then
-        echo "=> ln -sf ${CONFIG_PATH}/config.${CONFIG_OPTION} ${CONFIG_PATH}/config"
-        ln -sf "${CONFIG_PATH}/config.${CONFIG_OPTION}" "${CONFIG_PATH}/config"
-    fi
-}
+dots_create_base_folders
 
 if [[ "${1}" = "bash" ]]; then
-    dots_confirm_bash
+    dots_confirm
     dots_install_bash
     dots_bash_exit_message
 fi
@@ -137,20 +127,9 @@ if [[ "${1}" = "apps" && -n "${2}" ]]; then
     dots_apps_install "${2}"
 fi
 
-if [[ "${1}" = "config" && -n "${2}" ]]; then
-    echo "args ${1} ${2} ${3}"
-    dots_config_install "${2}" "${3}"
-fi
-
-if [[ "${1}" = "update" ]]; then
-    echo "args ${1}"
-    git pull
-fi
-
 if [[ "${1}" = "full" ]]; then
-    dots_create_base_folders
-    dots_confirm_bash
-    dots_install_bash
+    dots_confirm
+    dots_choose_shell_env
     dots_install_fonts
     dots_install_kitty
     dots_install_volta
