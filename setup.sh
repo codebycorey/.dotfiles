@@ -42,6 +42,10 @@ dots_install_fonts() {
     fc-cache -f -v
 }
 
+dots_install_fonts_mac() {
+    cp -Rf $DOTS_INSTALL_DIR/.fonts/* $HOME/Library/Fonts
+}
+
 dots_install_starship() {
     curl -fsSL https://starship.rs/install.sh | bash -s -- -b "$HOME/.local/bin"
     dots_symlink_home $DOTS_INSTALL_DIR ".config/starship.toml"
@@ -59,7 +63,7 @@ dots_install_volta() {
 dots_bash_exit_message() {
     echo "=========================================="
     echo "="
-    echo "=Open new terminal for file to take effect"
+    echo "= Restart terminal for setup to take effect"
     echo "="
     echo "=========================================="
 }
@@ -133,6 +137,14 @@ if [[ "${1}" = "full" ]]; then
     dots_install_fonts
     dots_install_kitty
     dots_install_volta
+    dots_install_starship
+    dots_bash_exit_message
+fi
+
+if [[ "${1}" = "mac" ]]; then
+    dots_confirm
+    dots_install_zsh
+    dots_install_fonts_mac
     dots_install_starship
     dots_bash_exit_message
 fi
