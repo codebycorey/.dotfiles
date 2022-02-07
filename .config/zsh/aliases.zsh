@@ -25,7 +25,6 @@ alias ll="ls -FGlAhp --color=auto"          # Preferred "ls" implementation
 cd() { builtin cd "$@" && ll; }             # Always list directory contents upon "cd"
 alias ..="cd ../"                           # Go back 1 directory level
 alias c="clear"                             # c:            Clear terminal display
-alias which="type -all"                     # which:        Find executables
 alias path="echo -e ${PATH}"         # path:         Echo all executable Paths
 alias show_options="shopt"                  # Show_options: display bash options settings
 alias grep='grep --color=auto'
@@ -33,10 +32,6 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
-
-# Fun stuff
-alias cow="fortune | cowsay"                # cow           Make cow speak
-alias weather="curl -4 http://wttr\.in"     # Weather:      Opens Weather App
 
 #   ---------------------------
 #   1.  SEARCHING

@@ -10,8 +10,7 @@ source $ZDOTDIR/functions.zsh      # Add tools and functions
 
 # Default Programs
 export EDITOR="vim"
-export TERMINAL="kitty"
-export BROWSER="brave-browser"
+export BROWSER="firefox"
 export PAGER="less"
 export LESS="-FSRXc"
 
@@ -37,17 +36,24 @@ setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
-# ZSH Auto Complete
-autoload -U compinit                                    # Autoload auto completion
-_comp_options+=(globdots)		                        # Include hidden files
-zstyle ':completion:*' menu select                      # Have the menu highlight
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'     # Case-insensitive (uppercase from lowercase) completion
-zstyle ':completion:*' insert-tab false                 # Preven tab insertion
-setopt COMPLETE_IN_WORD                                 # Allow completion from within a word/phrase
-setopt ALWAYS_TO_END                                    # When completing from the middle of a word, move cursor to end of word
-setopt MENU_COMPLETE                                    # When using auto-complete, put the first option on the line immediately
-setopt COMPLETE_ALIASES                                 # Turn on completion for aliases as well
-setopt LIST_ROWS_FIRST                                  # Cycle through menus horizontally instead of vertically
+# # ZSH Auto Complete
+local ZSH_AUTOCOMPLETE=$HOME/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+[[ -r $ZSH_AUTOCOMPLETE ]] && source $ZSH_AUTOCOMPLETE
 
-# Override config
+# autoload -U compinit                                    # Autoload auto completion
+# _comp_options+=(globdots)		                        # Include hidden files
+# zstyle ':completion:*' menu select                      # Have the menu highlight
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'     # Case-insensitive (uppercase from lowercase) completion
+# zstyle ':completion:*' insert-tab false                 # Preven tab insertion
+# setopt COMPLETE_IN_WORD                                 # Allow completion from within a word/phrase
+# setopt ALWAYS_TO_END                                    # When completing from the middle of a word, move cursor to end of word
+# setopt MENU_COMPLETE                                    # When using auto-complete, put the first option on the line immediately
+# setopt COMPLETE_ALIASES                                 # Turn on completion for aliases as well
+# setopt LIST_ROWS_FIRST                                  # Cycle through menus horizontally instead of vertically
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# # Override config
 [[ -r $ZSH_OVERRIDE ]] && source $ZSH_OVERRIDE

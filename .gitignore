@@ -20,3 +20,4 @@ ui-fingerprint
 # .zsh
 .zcompdump
 history
+.zsh_history
