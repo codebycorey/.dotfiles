@@ -21,3 +21,4 @@ ui-fingerprint
 .zcompdump
 history
 .zsh_history
+.zsh_sessions

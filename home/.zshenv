@@ -8,5 +8,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.volta/bin"
 export PATH="$PATH:$HOME/.brew/bin"
+export PATH="$PATH:$HOME/.poetry/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
 
 export GPG_TTY=$(tty)

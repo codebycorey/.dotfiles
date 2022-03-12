@@ -4,6 +4,9 @@ local ZSH_OVERRIDE=$HOME/.zshrc
 
 eval "$(starship init zsh)"         # Set prompt using starship
 
+bindkey -s ^f "tmux-session\n"
+# bindkey -s ^f "echo 'test'"
+
 # Load config files and tools
 source $ZDOTDIR/aliases.zsh        # Add aliases and remaps with prefered settings
 source $ZDOTDIR/functions.zsh      # Add tools and functions
