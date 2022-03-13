@@ -40,9 +40,10 @@ setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
 # # ZSH Auto Complete
+local ZSH_AUTOSUGGESTIONS=$HOME/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -r $ZSH_AUTOSUGGESTIONS ]] && source $ZSH_AUTOSUGGESTIONS
 local ZSH_AUTOCOMPLETE=$HOME/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 [[ -r $ZSH_AUTOCOMPLETE ]] && source $ZSH_AUTOCOMPLETE
-
 # autoload -U compinit                                    # Autoload auto completion
 # _comp_options+=(globdots)		                        # Include hidden files
 # zstyle ':completion:*' menu select                      # Have the menu highlight

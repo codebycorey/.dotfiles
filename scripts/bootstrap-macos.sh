@@ -9,4 +9,4 @@ eval "$($HOME/.brew/bin/brew shellenv)"
 brew update --force --quiet
 chmod -R go-w "$(brew --prefix)/share/zsh"
 
-brew install fzf stow tmux
+brew install fzf stow tmux bash
