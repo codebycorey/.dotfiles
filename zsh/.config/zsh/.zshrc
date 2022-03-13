@@ -29,12 +29,10 @@ unsetopt FLOW_CONTROL               # Disable ctrl-s to freeze terminal.
 HISTFILE=$ZDOTDIR/history           # Move history from home directory
 SAVEHIST=10000                      # Lots of history
 HISTSIZE=10000                      # Lots of history
-setopt EXTENDED_HISTORY             # Add more information to comand history
-setopt APPEND_HISTORY               # Multiple terminals sessions append to same history
 setopt INC_APPEND_HISTORY           # Append to history immediately
 setopt SHARE_HISTORY                # Share history across multiple terminal sessions
-setopt HIST_FIND_NO_DUPS            # Dont cycle through multiples of same command
-setopt HIST_EXPIRE_DUPS_FIRST       # Remove duplicates from history first if history full
+setopt EXTENDED_HISTORY             # Add more information to comand history
+setopt HIST_SAVE_NO_DUPS            # Don't save duplicate entries
 setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
