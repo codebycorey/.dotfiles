@@ -7,8 +7,8 @@ set -o nounset
 
 main() {
 
-    local DOTS_GIT_SOURCE="git@github.com:CodeByCorey/dotfiles.git"
-    local DOTS_GIT_RELEASE_BRANCH="master"
+    local DOTS_GIT_SOURCE="git@github.com:codebycorey/dotfiles.git"
+    local DOTS_GIT_RELEASE_BRANCH="main"
     local DOTS_DOWNLOAD_DIR="${HOME}/.dotfiles"
 
     dots_has() {

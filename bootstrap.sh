@@ -17,6 +17,10 @@ source ./scripts/starship.sh
 source ./scripts/nvm.sh
 source ./scripts/zsh-plugins.sh
 
-# MAC(fonts): cp -Rf $DOTS_INSTALL_DIR/.fonts/* $HOME/Library/Fonts
+# MACOS
+if [[ $OSTYPE == "darwin"* ]]; then
+    # Install fonts
+    cp -Rf $HOME/.fonts/* $HOME/Library/Fonts
+fi
 
 unset STOW_FOLDERS
