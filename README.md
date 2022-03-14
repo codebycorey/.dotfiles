@@ -1,25 +1,41 @@
-# bash-setup
+# .dotfiles
 
-I am forever moving from computer to computer and I wanted my aliases and shortcuts for each computer.
-This made me create a nice repository where I can slowly add all of my dot files.
-It has driven me to learn more bash scripting and I hope I can keep improving my script skills while I develop this further.
+My backup and history for my dotfiles.
 
-I then decided to create scripts that will allow other people to use my dotfiles if people decide they like them.
+Easily bootstrap a new machine to fix my needs which seem to be every changing.
 
-The install script will backup any of the files the project will overwrite. They can be restored using the one of the bellow commands.
+Git repository plus symlink make propagating dotfile changes across all machines simple.
+# GNU Stow
 
-## Install
+Most of the dotfiles are symlinked using [GNU Stow](https://www.gnu.org/software/stow/)
+
+Install on `macOS` using `homebrew`
+```
+brew install stow
+```
 
 #### Commands:
-Install Dots Application and bash files:
+Install Dots repo with git:
 ```
-curl -o- https://raw.githubusercontent.com/rcodonnell/dotfiles/master/install.sh | bash
+curl -o- https://raw.githubusercontent.com/codebycorey/dotfiles/master/install.sh | bash
 ```
-Current install location is located in `${HOME}/apps/dotfiles`
 
-Once dotfiles is installed, you can install bash files using
+or directly use `git clone`
 ```
-~/apps/dotfiles/dotfiles bash
+git clone git@github.com:codebycorey/dotfiles.git $HOME/.dotfiles
 ```
-This will remove your current dotfiles if there are file collision.
-Todo: Add backup of old dotfiles before replacing/deleting.
+
+
+
+Once dotfiles is installed, you can install dots using either:
+
+```bash
+# initializing entire repo to environment
+./bootstrap.sh
+```
+
+```bash
+# Only symlink dots using stow
+./scripts/dots.sh
+```
+
