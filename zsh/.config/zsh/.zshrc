@@ -18,7 +18,6 @@ export PAGER="less"
 export LESS="-FSRXc"
 
 # ZSH Options
-setopt ZLE                          # Enable the ZLE line editor
 setopt NO_BEEP                      # Disabled beeps
 setopt AUTO_CD                      # Automatically cd into typed directory.
 setopt INTERACTIVE_COMMENTS         # Allows comments in shell
