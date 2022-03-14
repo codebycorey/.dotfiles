@@ -9,98 +9,124 @@ add_newline = false
 # disabled = true
 
 [directory]
-style = "blue"
+# style = "blue"
 
 [aws]
 format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
+disabled = true
 
 [cmake]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [cmd_duration]
 format = '\[[⏱ $duration ]($style)\]'
+disabled = true
 
 [cobol]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [conda]
 format = '\[[$symbol$environment]($style)\]'
+disabled = true
 
 [crystal]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [dart]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [deno]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [docker_context]
 format = '\[[$symbol$context]($style)\]'
+disabled = true
 
 [dotnet]
 format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
+disabled = true
 
 [elixir]
 format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
+disabled = true
 
 [elm]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [erlang]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [gcloud]
 format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
+disabled = true
 
 [git_branch]
-format = '\[[$symbol$branch]($style)\]'
-style="green"
+format = '[$symbol$branch]($style)'
 
 [git_status]
-format = '([\[$all_status$ahead_behind\]]($style))'
+format = '( [$all_status$ahead_behind]($style))'
 
 [golang]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [helm]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [hg_branch]
 format = '\[[$symbol$branch]($style)\]'
+disabled = true
 
 [java]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [julia]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [kotlin]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [kubernetes]
 format = '\[[$symbol$context( \($namespace\))]($style)\]'
+disabled = true
 
 [lua]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
+disabled = true
 
 [nim]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [nix_shell]
 format = '\[[$symbol$state( \($name\))]($style)\]'
+disabled = true
 
 [nodejs]
-format = '\[[$symbol($version)]($style)\]'
+format = ' [$symbol($version)]($style)'
 
 [ocaml]
 format = '\[[$symbol($version)(\($switch_indicator$switch_name\))]($style)\]'
+disabled = true
 
 [openstack]
 format = '\[[$symbol$cloud(\($project\))]($style)\]'
+disabled = true
 
 [package]
 format = '\[[$symbol$version]($style)\]'
@@ -108,42 +134,55 @@ disabled = true
 
 [perl]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [php]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [pulumi]
 format = '\[[$symbol$stack]($style)\]'
+disabled = true
 
 [purescript]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+disabled = true
 
 [red]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [ruby]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [rust]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [scala]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [sudo]
 format = '\[[as $symbol]\]'
+disabled = true
 
 [swift]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [terraform]
 format = '\[[$symbol$workspace]($style)\]'
+disabled = true
 
 [time]
 format = '\[[$time]($style)\]'
+disabled = true
 
 [username]
 format = '[$user]($style) '
@@ -151,9 +190,12 @@ show_always = true
 
 [vagrant]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [vlang]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
 
 [zig]
 format = '\[[$symbol($version)]($style)\]'
+disabled = true
