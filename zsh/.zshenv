@@ -11,4 +11,6 @@ export PATH="$PATH:$HOME/.brew/bin"
 export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
 
+export GIT_EDITOR='nvim'
+
 export GPG_TTY=$(tty)

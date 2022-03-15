@@ -12,10 +12,9 @@ source $ZDOTDIR/aliases.zsh        # Add aliases and remaps with prefered settin
 source $ZDOTDIR/functions.zsh      # Add tools and functions
 
 # Default Programs
-export EDITOR="vim"
+export EDITOR="nvim"
 export BROWSER="firefox"
 export PAGER="less"
-export LESS="-FSRXc"
 
 # ZSH Options
 setopt NO_BEEP                      # Disabled beeps
