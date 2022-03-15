@@ -1,8 +1,10 @@
+#!/usr/bin/env bash
+
 # Setup dotfiles
 
 STOW_DIR=${DOTS_HOME:-"$HOME/.dotfiles"}
 TARGET_DIR=$HOME
-STOW_FOLDERS=("zsh" "tmux" "starship" "bin" "fonts")
+STOW_FOLDERS=("zsh" "tmux" "bin" "fonts" "cheatsheet" "starship")
 for folder in ${STOW_FOLDERS[@]}
 do
     echo $folder
