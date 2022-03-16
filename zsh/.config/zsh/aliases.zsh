@@ -68,8 +68,6 @@ fi
 if [[ -d "${HOME}/workspace" ]]; then
     for FOLDER in $(ls ${HOME}/workspace/); do alias "dev-${FOLDER}"="cd ${HOME}/workspace/${FOLDER}"; done
 fi
-alias code-dots="code ${HOME}/.dotfiles"
-alias dev-dots="cd ${HOME}/.dotfiles"
 
 #   mans:   Search manpage given in agument "1" for term given in argument "2" (case insensitive)
 #           displays paginated result with colored search terms and two lines surrounding each hit.             Example: mans mplayer codec

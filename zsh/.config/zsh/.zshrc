@@ -15,6 +15,7 @@ source $ZDOTDIR/functions.zsh      # Add tools and functions
 export EDITOR="nvim"
 export BROWSER="firefox"
 export PAGER="less"
+alias vim=nvim
 
 # ZSH Options
 setopt NO_BEEP                      # Disabled beeps
