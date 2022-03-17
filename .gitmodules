@@ -1,3 +1,6 @@
 [submodule "personal"]
 	path = personal
 	url = git@github.com:codebycorey/.dotfiles-personal.git
+[submodule "alt"]
+	path = alt
+	url = git@github.com:codebycorey/.dotfiles-alt.git
