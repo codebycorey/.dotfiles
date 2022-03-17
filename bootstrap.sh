@@ -4,8 +4,7 @@
 mkdir -pv $HOME/personal
 mkdir -pv $HOME/work
 
-# Setup dotfiles
-source ./scripts/dots.sh
+source ./install-dots
 
 source ./scripts/starship.sh
 source ./scripts/nvm.sh

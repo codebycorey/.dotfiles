@@ -41,16 +41,6 @@ local ZSH_AUTOSUGGESTIONS=$HOME/.config/zsh-autosuggestions/zsh-autosuggestions.
 [[ -r $ZSH_AUTOSUGGESTIONS ]] && source $ZSH_AUTOSUGGESTIONS
 local ZSH_AUTOCOMPLETE=$HOME/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 [[ -r $ZSH_AUTOCOMPLETE ]] && source $ZSH_AUTOCOMPLETE
-# autoload -U compinit                                    # Autoload auto completion
-# _comp_options+=(globdots)		                        # Include hidden files
-# zstyle ':completion:*' menu select                      # Have the menu highlight
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'     # Case-insensitive (uppercase from lowercase) completion
-# zstyle ':completion:*' insert-tab false                 # Preven tab insertion
-# setopt COMPLETE_IN_WORD                                 # Allow completion from within a word/phrase
-# setopt ALWAYS_TO_END                                    # When completing from the middle of a word, move cursor to end of word
-# setopt MENU_COMPLETE                                    # When using auto-complete, put the first option on the line immediately
-# setopt COMPLETE_ALIASES                                 # Turn on completion for aliases as well
-# setopt LIST_ROWS_FIRST                                  # Cycle through menus horizontally instead of vertically
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
