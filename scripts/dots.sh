@@ -4,7 +4,7 @@
 
 STOW_DIR=${DOTS_HOME:-"$HOME/.dotfiles"}
 TARGET_DIR=$HOME
-STOW_FOLDERS=("zsh" "tmux" "bin" "fonts" "cheatsheet" "starship")
+STOW_FOLDERS=("zsh" "tmux" "bin" "fonts" "cheatsheet" "starship" "vim")
 for folder in ${STOW_FOLDERS[@]}
 do
     echo $folder
