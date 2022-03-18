@@ -1,21 +1,28 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
-local ZSH_OVERRIDE=$HOME/.zshrc
+# OH MY ZSH SETUP
+# TODO: Move this to a separate file
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="gruvbox"
+SOLARIZED_THEME="dark"
 
-eval "$(starship init zsh)"         # Set prompt using starship
+plugins=(
+    git
+    zsh-autosuggestions
+)
 
-bindkey -s ^f "tmux-session\n"
-bindkey -s ^w "work-tmux\n"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# Load config files and tools
-source $ZDOTDIR/aliases.zsh        # Add aliases and remaps with prefered settings
-source $ZDOTDIR/functions.zsh      # Add tools and functions
+source $ZSH/oh-my-zsh.sh
+## END OH MY ZSH SETUP
 
-# Default Programs
-export EDITOR="nvim"
-export BROWSER="firefox"
-export PAGER="less"
-alias vim=nvim
+# ZSH CONFIGURATION
+ZSH_CONFIGS=$HOME/.config/shell
+for i in `find -L $ZSH_CONFIGS`; do
+    source $i
+done
+
+bindkey -s '^f' "tmux-session\n"
 
 # ZSH Options
 setopt NO_BEEP                      # Disabled beeps
@@ -25,7 +32,6 @@ unsetopt FLOW_CONTROL               # Disable ctrl-s to freeze terminal.
 #setopt vi                          # Enables vi in shell with escape
 
 # ZSH History
-HISTFILE=$ZDOTDIR/history           # Move history from home directory
 SAVEHIST=10000                      # Lots of history
 HISTSIZE=10000                      # Lots of history
 setopt INC_APPEND_HISTORY           # Append to history immediately
@@ -36,15 +42,8 @@ setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
-# # ZSH Auto Complete
-local ZSH_AUTOSUGGESTIONS=$HOME/.config/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -r $ZSH_AUTOSUGGESTIONS ]] && source $ZSH_AUTOSUGGESTIONS
-local ZSH_AUTOCOMPLETE=$HOME/.config/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-[[ -r $ZSH_AUTOCOMPLETE ]] && source $ZSH_AUTOCOMPLETE
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# # Override config
-[[ -r $ZSH_OVERRIDE ]] && source $ZSH_OVERRIDE
+eval "$(starship init zsh)"         # Set prompt using starship
