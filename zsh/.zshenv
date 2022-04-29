@@ -9,6 +9,7 @@ export PATH="$PATH:$HOME/.volta/bin"
 export PATH="$PATH:$HOME/.brew/bin"
 export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # Default Programs
 export EDITOR="nvim"

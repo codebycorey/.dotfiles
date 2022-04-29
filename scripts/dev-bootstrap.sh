@@ -17,7 +17,7 @@ brew install golang
 brew install iterm2 --cask
 brew install tmux
 brew install neovim
-
+brew install lazygit
 
 # Neovim Dependencies
 brew install ripgrep # Telescope
