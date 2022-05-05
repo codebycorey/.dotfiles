@@ -10,6 +10,7 @@ STOW_FOLDERS=("${STOW_FOLDERS[@]:-${DEFAULT_STOW_FOLDERS[@]}}")
 pushd $STOW_DIR
 for folder in ${STOW_FOLDERS[@]}
 do
+    echo "Symlinking $folder"
     stow -D $folder -t $TARGET_DIR
     stow $folder -t $TARGET_DIR
 done

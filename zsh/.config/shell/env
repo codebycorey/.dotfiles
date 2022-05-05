@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+export PERSONAL_DIRS="$HOME/personal $HOME/personal/learning-rust"
