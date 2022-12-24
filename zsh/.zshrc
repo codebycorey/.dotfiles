@@ -23,6 +23,7 @@ for i in `find -L $ZSH_CONFIGS`; do
 done
 
 bindkey -s '^f' "tmux-session\n"
+bindkey -s '^n' "nvim\n"
 
 # ZSH Options
 setopt NO_BEEP                      # Disabled beeps
