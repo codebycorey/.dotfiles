@@ -12,9 +12,7 @@ if [[ ! -s "$HOME/.brew/bin/brew" ]]; then
     chmod -R go-w "$(brew --prefix)/share/zsh"
 fi
 
-brew install stow git fzf bash golang tmux neovim lazygit ripgrep fd lua-language-server koekeishiya/formulae/skhd jq
-brew install alfred iterm2 karabiner-elements keycastr rectangle --cask
-
+brew bundle install
 brew services start skhd
 
 # Setup required folders
