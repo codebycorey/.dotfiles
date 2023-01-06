@@ -4,7 +4,7 @@
 STOW_DIR=${DOTFILES:-"$HOME/.dotfiles"}
 TARGET_DIR=$HOME
 
-DEFAULT_STOW_FOLDERS=("alt" "bin" "cht-sh" "fonts" "neovim" "starship" "tmux" "vim" "zsh" "yabai")
+DEFAULT_STOW_FOLDERS=("alt" "bin" "cht-sh" "fonts" "kitty" "neovim" "starship" "tmux" "vim" "zsh" "yabai")
 STOW_FOLDERS=("${STOW_FOLDERS[@]:-${DEFAULT_STOW_FOLDERS[@]}}")
 
 pushd $STOW_DIR
