@@ -43,8 +43,9 @@ setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(starship init zsh)"         # Set prompt using starship
+eval "$(fnm env --use-on-cd)"
