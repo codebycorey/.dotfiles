@@ -8,6 +8,7 @@ brew services restart spacebar
 # Float windows that do not behave well tiled
 yabai -m rule --add app="^System Settings$" manage=off
 yabai -m rule --add app="^Music$" manage=off
+yabai -m rule --add app="^Reminders$" manage=off
 
 
 yabai -m config layout bsp
