@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+
+NEOVIM_CONFIG="$HOME/.dotfiles/neovim/.config"
+
+ALL_DIRS=(
+    $HOME
+    $HOME/projects
+    $HOME/work
+    $HOME/.dotfiles/neovim/.config
+)
+
+SELECTED_DIR=$(find "${ALL_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
+
+if [[ -z "$SELECTED_DIR" ]]; then
+    exit 0
+fi
+
+session_name=$(basename "$SELECTED_DIR" | tr . _)
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    if [[ "$ITERM_PROFILE" == "float" ]]; then
+        session_name="^$session_name"
+    fi
+fi
+
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    tmux attach-session -t "$session_name"
+else
+    tmux new-session -s "$session_name" -c "$SELECTED_DIR"
+fi
