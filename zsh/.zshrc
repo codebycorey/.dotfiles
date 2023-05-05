@@ -22,7 +22,7 @@ for i in `find -L $ZSH_CONFIGS`; do
     source $i
 done
 
-bindkey -s '^f' "tmux-session\n"
+bindkey -s '^f' "tmux-manager\n"
 bindkey -s '^n' "nvim\n"
 
 # ZSH Options

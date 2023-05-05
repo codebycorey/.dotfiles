@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-
-NEOVIM_CONFIG="$HOME/.dotfiles/neovim/.config"
-
 ALL_DIRS=(
     $HOME
     $HOME/projects
@@ -24,8 +21,33 @@ if [[ "$(uname)" == "Darwin" ]]; then
     fi
 fi
 
-if tmux has-session -t "$session_name" 2>/dev/null; then
-    tmux attach-session -t "$session_name"
-else
-    tmux new-session -s "$session_name" -c "$SELECTED_DIR"
+if ! tmux has-session -t=$session_name 2> /dev/null; then
+    tmux new-session -ds $session_name -c $SELECTED_DIR
 fi
+
+if [[ -z "$TMUX" ]]; then
+    tmux attach-session -t $session_name
+else
+  tmux switch-client -t $session_name
+fi
+# if tmux has-session -t "$session_name" 2>/dev/null; then
+#     echo "has session"
+#     # tmux attach-session -t "$session_name"
+#     if [[ -z "$TMUX" ]]; then
+#         echo "attach"
+#         tmux attach-session -t $selected_name
+#     else
+#         echo "switch"
+#         tmux switch-client -t "$selected_name"
+#     fi
+# else
+#     echo "no session"
+#     tmux new-session -ds "$session_name" -c "$SELECTED_DIR"
+#     if [[ -z "$TMUX" ]]; then
+#         echo "attach"
+#         tmux attach-session -t $selected_name
+#     else
+#         echo "switch"
+#         tmux switch-client -t "$selected_name"
+#     fi
+# fi
