@@ -5,9 +5,9 @@ alt - j : yabai -m window --focus south
 alt - l : yabai -m window --focus east
 
 shift + alt - h : yabai -m window --warp west
-shift + alt - j : yabai -m window --warp south 
-shift + alt - k : yabai -m window --warp north 
-shift + alt - l : yabai -m window --warp east 
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
 
 alt - v : yabai -m window --toggle split
 
@@ -22,11 +22,7 @@ alt - q : skhd --key "cmd - q"
 alt - return: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
 
 # Restart Yabai
-shift + alt - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-
+shift + alt - r : yabai --restart-service
 
 # alt - 1 : yabai -m window --display 1 yabai -m display --focus 1
 # alt - 2 : yabai -m window --display 2 yabai -m display --focus 2
