@@ -16,7 +16,8 @@ fi
 session_name=$(basename "$SELECTED_DIR" | tr . _)
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    if [[ "$ITERM_PROFILE" == "float" ]]; then
+    terminal=$(tmux display-message -p '#{client_termname}')
+    if [[ ! "$terminal" == *"kitty"* ]]; then
         session_name="^$session_name"
     fi
 fi
@@ -30,24 +31,4 @@ if [[ -z "$TMUX" ]]; then
 else
   tmux switch-client -t $session_name
 fi
-# if tmux has-session -t "$session_name" 2>/dev/null; then
-#     echo "has session"
-#     # tmux attach-session -t "$session_name"
-#     if [[ -z "$TMUX" ]]; then
-#         echo "attach"
-#         tmux attach-session -t $selected_name
-#     else
-#         echo "switch"
-#         tmux switch-client -t "$selected_name"
-#     fi
-# else
-#     echo "no session"
-#     tmux new-session -ds "$session_name" -c "$SELECTED_DIR"
-#     if [[ -z "$TMUX" ]]; then
-#         echo "attach"
-#         tmux attach-session -t $selected_name
-#     else
-#         echo "switch"
-#         tmux switch-client -t "$selected_name"
-#     fi
-# fi
+
