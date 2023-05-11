@@ -18,6 +18,7 @@ source $ZSH/oh-my-zsh.sh
 
 # ZSH CONFIGURATION
 ZSH_CONFIGS=$HOME/.config/shell
+
 for i in `find -L $ZSH_CONFIGS`; do
     source $i
 done
