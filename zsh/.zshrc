@@ -34,6 +34,9 @@ setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
+autoload -Uz compinit && compinit
+
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
