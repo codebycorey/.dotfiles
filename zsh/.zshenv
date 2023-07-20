@@ -10,6 +10,7 @@ export PATH="$PATH:$HOME/.brew/bin"
 export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/Library/Python/3.9/bin"
 
 # Default Programs
 export EDITOR="nvim"

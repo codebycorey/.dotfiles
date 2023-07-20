@@ -1,20 +1,10 @@
 #!/usr/bin/env zsh
-
-# OH MY ZSH SETUP
-# TODO: Move this to a separate file
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="gruvbox"
-SOLARIZED_THEME="dark"
-
-plugins=(
-    git
-    zsh-autosuggestions
-)
-
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-
-source $ZSH/oh-my-zsh.sh
-## END OH MY ZSH SETUP
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # ZSH CONFIGURATION
 ZSH_CONFIGS=$HOME/.config/shell
@@ -44,9 +34,13 @@ setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval "$(starship init zsh)"         # Set prompt using starship
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 eval "$(fnm env --use-on-cd)"
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
