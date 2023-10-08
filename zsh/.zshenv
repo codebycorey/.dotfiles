@@ -6,11 +6,11 @@ unsetopt PROMPT_SP
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.volta/bin"
-export PATH="$PATH:$HOME/.brew/bin"
 export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
+export PATH="$PATH:/opt/homebrew/bin"
 
 # Default Programs
 export EDITOR="nvim"

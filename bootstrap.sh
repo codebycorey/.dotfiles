@@ -13,7 +13,6 @@ if [[ ! -s "$HOME/.brew/bin/brew" ]]; then
 fi
 
 brew bundle install
-brew services start skhd
 
 # Setup required folders
 mkdir -pv $HOME/personal
@@ -28,11 +27,3 @@ source ${BASH_SOURCE%/*}/scripts/nvm.sh
 source ${BASH_SOURCE%/*}/scripts/zsh-plugins.sh
 source ${BASH_SOURCE%/*}/scripts/rust.sh
 
-# After rust install install stylua to format lua
-# cargo install stylua
-
-# MACOS
-# if [[ $OSTYPE == "darwin"* ]]; then
-#     # Install fonts
-cp -Rf $HOME/.fonts/* $HOME/Library/Fonts
-# fi
