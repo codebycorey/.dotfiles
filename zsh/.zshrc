@@ -46,7 +46,7 @@ else
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 eval "$(fnm env --use-on-cd)"
