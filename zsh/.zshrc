@@ -54,3 +54,7 @@ eval "$(fnm env --use-on-cd)"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if command -v supabase &> /dev/null; then
+    source <(supabase completion zsh)
+fi
+
