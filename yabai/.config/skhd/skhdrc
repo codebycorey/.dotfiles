@@ -14,15 +14,19 @@ alt - v : yabai -m window --toggle split
 shift + alt - right : yabai -m space --rotate 90
 shift + alt - left : yabai -m space --rotate 270
 
+shift + alt - return: yabai -m window --toggle zoom-parent
+
 # Kill container
 alt + shift - q : skhd --key "cmd - q"
 alt - q : skhd --key "cmd - q"
 
 # Open terminal
-alt - return: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+alt - return: /Applications/WezTerm.app/Contents/MacOS/wezterm
 
-# Restart Yabai
-shift + alt - r : yabai --restart-service
+# Restart Yabaj
+shift + alt - r: yabai --restart-service
+shift + alt - e: yabai --stop-service
+shift + alt - s: yabai --start-service
 
 # alt - 1 : yabai -m window --display 1 yabai -m display --focus 1
 # alt - 2 : yabai -m window --display 2 yabai -m display --focus 2
