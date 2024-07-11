@@ -21,4 +21,3 @@ export GIT_EDITOR='nvim'
 export GPG_TTY=$(tty)
 
 alias vim=nvim
-. "$HOME/.cargo/env"
