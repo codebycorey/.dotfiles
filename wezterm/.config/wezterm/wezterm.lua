@@ -5,10 +5,10 @@ local config = wezterm.config_builder()
 -- Set the TERM environment variable
 config.term = "tmux-256color"
 
--- config.font = wezterm.font("GeistMono Nerd Font Mono")
 config.font = wezterm.font("IosevkaTerm Nerd Font")
 config.font_size = 15.0
 config.line_height = 1.2
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 local catppuccin_mocha = "catppuccin-mocha"
 local catppuccin_colors = wezterm.color.get_builtin_schemes()[catppuccin_mocha]
