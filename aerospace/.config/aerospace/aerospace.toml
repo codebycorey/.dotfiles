@@ -16,6 +16,11 @@ default-root-container-orientation = 'auto'
 
 key-mapping.preset = 'qwerty'
 
+[workspace-to-monitor-force-assignment]
+8 = ['secondary', 'main']
+9 = ['secondary', 'main']
+10 = ['secondary', 'main']
+
 [gaps]
 inner.horizontal = 8
 inner.vertical =   8
