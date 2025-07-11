@@ -25,6 +25,7 @@ DOTFILE_PACKAGES=(
     "aerospace"
     "alt"
     "bin"
+    "git"
     "kitty"
     "neovim"
     "starship"
