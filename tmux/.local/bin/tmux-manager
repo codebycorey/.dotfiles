@@ -5,31 +5,25 @@ ALL_DIRS=(
     $HOME/projects
     $HOME/work
     $HOME/.dotfiles/neovim/.config
-    $WORK_PROJECTS
 )
 
-SELECTED_DIR=$(find "${ALL_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
+SELECTED_DIR=$(find "${ALL_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | \
+    sort | \
+    fzf --preview 'ls -la {}')
 
 if [[ -z "$SELECTED_DIR" ]]; then
     exit 0
 fi
 
-session_name=$(basename "$SELECTED_DIR" | tr . _)
+session_name=$(basename "$SELECTED_DIR" | tr -c '[:alnum:]_-' '_')
 
-if [[ "$(uname)" == "Darwin" ]]; then
-    terminal=$(tmux display-message -p '#{client_termname}')
-    if [[ ! "$terminal" == *"kitty"* ]]; then
-        session_name="^$session_name"
-    fi
-fi
-
-if ! tmux has-session -t=$session_name 2> /dev/null; then
-    tmux new-session -ds $session_name -c $SELECTED_DIR
+if ! tmux has-session -t "$session_name" 2> /dev/null; then
+    tmux new-session -d -s "$session_name" -c "$SELECTED_DIR"
 fi
 
 if [[ -z "$TMUX" ]]; then
-    tmux attach-session -t $session_name
+    tmux attach-session -t "$session_name"
 else
-  tmux switch-client -t $session_name
+    tmux switch-client -t "$session_name"
 fi
 
