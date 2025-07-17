@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+# Set the dotfiles repo and Brewfile path
+REPO_DIR="${DOTFILES:-$HOME/.dotfiles}"
+BREWFILE_PATH="$REPO_DIR/macos/Brewfile"
+
+# Ensure Homebrew is installed
+if ! command -v brew &>/dev/null; then
+  echo "Error: Homebrew is not installed." >&2
+  exit 1
+fi
+
+# Ensure the target directory exists
+mkdir -p "$(dirname "$BREWFILE_PATH")"
+
+# Dump the current bundle state
+echo "Dumping current Homebrew bundle state to $BREWFILE_PATH..."
+brew bundle dump --file="$BREWFILE_PATH" --force
+
+echo "Brewfile updated at $BREWFILE_PATH."
