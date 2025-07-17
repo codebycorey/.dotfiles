@@ -4,9 +4,20 @@ set -e
 # Run OS-specific setup
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Setting up macOS-specific configurations..."
-  source ./macos.sh
+  source ./macos/macos.sh
 fi
 
+# Apply main dotfiles
+./dotfiles.sh "$@"
 
-# Create symbolic link for 1Password agent socket
-mkdir -p ~/.1password && ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+# Apply personal dotfiles if personal/home exists and is non-empty
+if [ -d "personal/home" ] && [ "$(ls -A personal/home 2>/dev/null)" ]; then
+  echo "Applying personal dotfiles..."
+  ./dotfiles.sh personal "$@"
+fi
+
+# Apply alt dotfiles if alt/home exists and is non-empty
+if [ -d "alt/home" ] && [ "$(ls -A alt/home 2>/dev/null)" ]; then
+  echo "Applying alt dotfiles..."
+  ./dotfiles.sh alt "$@"
+fi
