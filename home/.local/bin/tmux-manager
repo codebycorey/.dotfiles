@@ -1,29 +1,66 @@
 #!/usr/bin/env bash
 
-ALL_DIRS=(
-    $HOME
-    $HOME/projects
-    $HOME/work
-    $HOME/.dotfiles/neovim/.config
+# --- Directory selection configuration ---
+# To add or remove folders, edit the INCLUDE_PATHS and EXTRA_PATHS arrays below.
+# Format: "path:depth" (depth is the maxdepth for 'find')
+INCLUDE_PATHS=(
+    "$HOME:1"                # All direct subdirs of $HOME
+    "$HOME/projects:2"       # All projects at depth 2 (e.g., projects/companyX/projectX)
+    "$HOME/docs:1"           # All direct subdirs of docs
+)
+# Explicitly add any extra paths here (not found by the above rules)
+EXTRA_PATHS=(
+    "$HOME/.dotfiles/home/.config/nvim"  # Neovim config
 )
 
-SELECTED_DIR=$(find "${ALL_DIRS[@]}" -mindepth 1 -maxdepth 1 -type d | \
-    sort | \
+# --- Collect directories ---
+ALL_DIRS=()
+# Loop through each entry in INCLUDE_PATHS (format: path:depth)
+for entry in "${INCLUDE_PATHS[@]}"; do
+    # Split the entry into path and depth using ':' as delimiter
+    IFS=":" read -r path depth <<< "$entry"
+    # Only proceed if the path exists and is a directory
+    if [[ -d "$path" ]]; then
+        # Use 'find' to get all directories at the specified depth
+        # -mindepth and -maxdepth ensure we only get directories at that exact depth
+        while IFS= read -r dir; do
+            ALL_DIRS+=("$dir")  # Add each found directory to the ALL_DIRS array
+        done < <(find "$path" -mindepth "$depth" -maxdepth "$depth" -type d 2>/dev/null)
+    fi
+    # If the path doesn't exist, nothing is added
+    # This makes it safe to add/remove entries in INCLUDE_PATHS
+    # and avoids errors if a directory is missing
+    #
+done
+# Add extra paths if they exist (e.g., Neovim config)
+for extra in "${EXTRA_PATHS[@]}"; do
+    [[ -d "$extra" ]] && ALL_DIRS+=("$extra")  # Only add if the directory exists
+    # This allows you to explicitly include any directory, even if not found by 'find'
+done
+
+# Remove duplicate entries from ALL_DIRS (sort -u for uniqueness)
+mapfile -t ALL_DIRS < <(printf '%s\n' "${ALL_DIRS[@]}" | sort -u)
+
+SELECTED_DIR=$(printf '%s\n' "${ALL_DIRS[@]}" | \
     fzf --preview 'ls -la {}')
 
+# Exit if no directory was selected
 if [[ -z "$SELECTED_DIR" ]]; then
+    echo "No directory selected. Exiting."
     exit 0
 fi
 
-session_name=$(basename "$SELECTED_DIR" | tr -c '[:alnum:]_-' '_')
+# Generate tmux session name by replacing invalid characters with underscores
+session_name=$(basename "$SELECTED_DIR" | sed -E 's/[^[:alnum:]_-]/_/g')
 
+# Create the tmux session if it doesn't exist
 if ! tmux has-session -t "$session_name" 2> /dev/null; then
     tmux new-session -d -s "$session_name" -c "$SELECTED_DIR"
 fi
 
+# Attach or switch to the session
 if [[ -z "$TMUX" ]]; then
     tmux attach-session -t "$session_name"
 else
     tmux switch-client -t "$session_name"
 fi
-

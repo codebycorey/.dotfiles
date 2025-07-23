@@ -59,9 +59,21 @@ restart_affected_apps() {
 }
 
 setup_xcode() {
-  echo "Installing Xcode command line tools..."
-  xcode-select --install || true
-  sudo xcodebuild -license accept
+  echo "Setting up Xcode command line tools..."
+
+  if ! xcode-select -p &>/dev/null; then
+    echo "Installing Xcode command line tools..."
+    xcode-select --install
+    echo "Please complete the installation in the dialog, then re-run this script."
+    exit 1
+  else
+    echo "Xcode command line tools already installed."
+  fi
+
+  if command -v xcodebuild &>/dev/null; then
+    echo "Accepting Xcode license..."
+    sudo xcodebuild -license accept
+  fi
 }
 
 setup_1password_agent() {
@@ -71,13 +83,13 @@ setup_1password_agent() {
 }
 
 main() {
+  setup_xcode
   setup_homebrew
   install_brewfile
   setup_finder
   setup_dock
   setup_keyboard
   restart_affected_apps
-  setup_xcode
   setup_1password_agent
 }
 
