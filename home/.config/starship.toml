@@ -26,28 +26,28 @@ success_symbol = " [❯](green)"
 error_symbol = " [❯](red)"
 vimcmd_symbol = " [❮](subtext1)" # For use with zsh-vi-mode
 
+[username]
+show_always = true
+
+[hostname]
+format = '[$ssh_symbol$hostname]($style) '
 
 [directory]
 style = "bold blue"
-
 
 [git_branch]
 style = "bold mauve"
 format = "[$symbol$branch]($style) "
 
-
 [git_status]
-format = '([$all_status$ahead_behind]($style))'
+format = '([$all_status$ahead_behind]($style)) '
 
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
 
 [nodejs]
 format = ' [$symbol($version)]($style)'
-
-
-[username]
-format = '[$user]($style) '
-show_always = true
-
 
 # Palette definitions
 [palettes.catppuccin_latte]
