@@ -21,4 +21,7 @@ config.hide_tab_bar_if_only_one_tab = true
 config.color_schemes = colors.color_schemes
 config.color_scheme = colors.active_theme
 
+print("Active color scheme:", colors.active_theme)
+print("Available color schemes:", colors.color_schemes[colors.active_theme])
+
 return config
