@@ -2,10 +2,10 @@
 
 # --- Directory selection configuration ---
 # To add or remove folders, edit the INCLUDE_PATHS and EXTRA_PATHS arrays below.
-# Format: "path:depth" (depth is the maxdepth for 'find')
+# Format: "path:maxdepth" (finds all directories from depth 1 to maxdepth)
 INCLUDE_PATHS=(
     "$HOME:1"                # All direct subdirs of $HOME
-    "$HOME/projects:2"       # All projects at depth 2 (e.g., projects/companyX/projectX)
+    "$HOME/projects:2"       # All projects from depth 1-2 (e.g., projects/companyX and projects/companyX/projectX)
     "$HOME/docs:1"           # All direct subdirs of docs
 )
 # Explicitly add any extra paths here (not found by the above rules)
@@ -15,17 +15,16 @@ EXTRA_PATHS=(
 
 # --- Collect directories ---
 ALL_DIRS=()
-# Loop through each entry in INCLUDE_PATHS (format: path:depth)
+# Loop through each entry in INCLUDE_PATHS (format: path:maxdepth)
 for entry in "${INCLUDE_PATHS[@]}"; do
-    # Split the entry into path and depth using ':' as delimiter
-    IFS=":" read -r path depth <<< "$entry"
+    # Split the entry into path and maxdepth using ':' as delimiter
+    IFS=":" read -r path maxdepth <<< "$entry"
     # Only proceed if the path exists and is a directory
     if [[ -d "$path" ]]; then
-        # Use 'find' to get all directories at the specified depth
-        # -mindepth and -maxdepth ensure we only get directories at that exact depth
+        # Use 'find' to get all directories from depth 1 to maxdepth
         while IFS= read -r dir; do
             ALL_DIRS+=("$dir")  # Add each found directory to the ALL_DIRS array
-        done < <(find "$path" -mindepth "$depth" -maxdepth "$depth" -type d 2>/dev/null)
+        done < <(find "$path" -mindepth 1 -maxdepth "$maxdepth" -type d 2>/dev/null)
     fi
     # If the path doesn't exist, nothing is added
     # This makes it safe to add/remove entries in INCLUDE_PATHS
