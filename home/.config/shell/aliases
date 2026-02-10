@@ -122,4 +122,8 @@ alias finderHideHidden="defaults write com.apple.finder ShowAllFiles FALSE"
 #   -----------------------------------------------------------------------------------
 alias cleanupLS="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
+alias cc="claude"
+alias ccp="claude --print"
+alias ccr="claude --resume"
+alias ccc="claude --continue"
 alias ccd="claude --dangerously-skip-permissions"
