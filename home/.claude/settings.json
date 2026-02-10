@@ -1,0 +1,58 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:ghuntley.github.io)",
+      "WebFetch(domain:ghuntley.com)",
+      "Bash(chmod:*)"
+    ],
+    "defaultMode": "dontAsk"
+  },
+  "enabledPlugins": {
+    "expo-app-design@expo-plugins": false,
+    "expo-deployment@expo-plugins": true,
+    "upgrading-expo@expo-plugins": true,
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "ds@delta-spec": true,
+    "plugin-dev@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notify-macos.sh \"$CLAUDE_NOTIFICATION\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/format-on-edit.sh \"$CLAUDE_FILE_PATH\"",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
