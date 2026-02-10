@@ -60,4 +60,11 @@ fi
 
 stow -R -v --adopt $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
 
+# --adopt moves existing files into the repo to resolve conflicts, which may
+# overwrite repo files with local versions. Restore the repo versions so the
+# committed dotfiles always win.
+if [[ -z "$DRY_RUN" ]]; then
+    git -C "$REPO_DIR" checkout -- "$STOW_SUBFOLDER"
+fi
+
 echo "Operation complete"
