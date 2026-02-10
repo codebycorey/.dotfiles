@@ -2,15 +2,13 @@
 set -e
 
 REPO_DIR=${DOTFILES:-"$HOME/.dotfiles"}
-STOW_SUBFOLDER="home"
-STOW_DIR="$REPO_DIR/$STOW_SUBFOLDER"
+STOW_DIR="$REPO_DIR/home"
 TARGET_DIR="$HOME"
 
 # Parse arguments
 DRY_RUN=""
 MODE="install"
 
-# Check for dry-run or clean flags (can be in any order)
 while [[ "$1" =~ ^- ]]; do
     if [[ "$1" == "--dry-run" || "$1" == "-n" ]]; then
         DRY_RUN="--no"
@@ -21,20 +19,14 @@ while [[ "$1" =~ ^- ]]; do
         echo "CLEAN MODE - Removing dotfile symlinks"
         shift
     elif [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        echo "Usage: $0 [--dry-run|-n] [--clean|-c] [alt|personal]"
+        echo "Usage: $0 [--dry-run|-n] [--clean|-c]"
         exit 0
     else
         echo "Unknown option: $1"
-        echo "Usage: $0 [--dry-run|-n] [--clean|-c] [alt|personal]"
+        echo "Usage: $0 [--dry-run|-n] [--clean|-c]"
         exit 1
     fi
 done
-
-# If a positional argument remains, use it as the subfolder (e.g., alt or personal)
-if [[ -n "$1" ]]; then
-    STOW_SUBFOLDER="$1/home"
-    STOW_DIR="$REPO_DIR/$STOW_SUBFOLDER"
-fi
 
 # Check if stow is installed
 if ! command -v stow &> /dev/null; then
@@ -64,7 +56,7 @@ stow -R -v --adopt $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
 # overwrite repo files with local versions. Restore the repo versions so the
 # committed dotfiles always win.
 if [[ -z "$DRY_RUN" ]]; then
-    git -C "$REPO_DIR" checkout -- "$STOW_SUBFOLDER"
+    git -C "$REPO_DIR" checkout -- home
 fi
 
 echo "Operation complete"

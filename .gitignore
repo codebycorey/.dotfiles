@@ -1,7 +1,3 @@
-
-# Private overlay clones
-local/
-
 # Prevent these files from being added
 .git-completion.bash
 .git-prompt.sh
