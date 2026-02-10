@@ -1,9 +1,0 @@
-[submodule "personal"]
-	path = personal
-	url = git@github.com:codebycorey/.dotfiles-personal.git
-[submodule "alt"]
-	path = alt
-	url = git@github.com:codebycorey/.dotfiles-alt.git
-[submodule "home/.config/nvim"]
-	path = home/.config/nvim
-	url = git@github.com:codebycorey/vinevim.git

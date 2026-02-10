@@ -10,7 +10,7 @@ INCLUDE_PATHS=(
 )
 # Explicitly add any extra paths here (not found by the above rules)
 EXTRA_PATHS=(
-    "$HOME/.dotfiles/home/.config/nvim"  # Neovim config
+    "$HOME/.config/nvim"  # Neovim config
 )
 
 # --- Collect directories ---
