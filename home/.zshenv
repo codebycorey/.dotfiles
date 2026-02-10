@@ -8,7 +8,6 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.volta/bin"
 export PATH="$PATH:$HOME/.poetry/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
 export PATH="$PATH:/opt/homebrew/bin"
 
@@ -19,5 +18,3 @@ export PAGER="less"
 export GIT_EDITOR='nvim'
 
 export GPG_TTY=$(tty)
-
-alias vim=nvim

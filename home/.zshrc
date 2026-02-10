@@ -1,11 +1,9 @@
 #!/usr/bin/env zsh
 
 # ZSH CONFIGURATION
-ZSH_CONFIGS=$HOME/.config/shell
-
-for i in `find -L $ZSH_CONFIGS`; do
-    source $i
-done
+source "$HOME/.config/shell/env"
+source "$HOME/.config/shell/aliases"
+source "$HOME/.config/shell/functions"
 
 bindkey -s '^f' "tmux-manager\n"
 bindkey -s '^n' "nvim\n"
@@ -39,17 +37,13 @@ else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 eval "$(starship init zsh)"
 
 eval "$(fnm env --use-on-cd)"
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-if command -v supabase &> /dev/null; then
-    # source <(supabase completion zsh)
-fi
+_brew_prefix=$(brew --prefix)
+source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+unset _brew_prefix
 

@@ -17,6 +17,7 @@
 #   0.  MAKE TERMINAL BETTER
 #   -----------------------------
 
+alias vim="nvim"
 alias cp="cp -iv"                           # Preferred "cp" implementation
 alias mv="mv -iv"                           # Preferred "mv" implementation
 alias mkdir="mkdir -pv"                     # Preferred "mkdir" implementation
@@ -120,3 +121,5 @@ alias finderHideHidden="defaults write com.apple.finder ShowAllFiles FALSE"
 #   cleanupLS:  Clean up LaunchServices to remove duplicates in the "Open With" menu
 #   -----------------------------------------------------------------------------------
 alias cleanupLS="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
+
+alias ccd="claude --dangerously-skip-permissions"
