@@ -9,15 +9,11 @@ macOS dotfiles repository using [GNU Stow](https://www.gnu.org/software/stow/) f
 ## Key Commands
 
 ```bash
-# Apply all dotfiles (main + local overlays)
+# Apply dotfiles
 ./setup.sh
 
-# Apply only main dotfiles
+# Apply only stow symlinks
 ./dotfiles.sh
-
-# Apply a specific overlay
-./dotfiles.sh local/personal
-./dotfiles.sh local/alt
 
 # Remove symlinks
 ./dotfiles.sh --clean
@@ -36,21 +32,7 @@ brewdump
 
 ### Stow Symlink System
 
-`dotfiles.sh` is the core script. It runs `stow -R` from a subfolder's `home/` directory targeting `$HOME`. The repo has three stow layers that overlay in order:
-
-1. **`home/`** — Main dotfiles (always applied)
-2. **`local/personal/home/`** — Personal overrides (cloned from `.dotfiles-personal`)
-3. **`local/alt/home/`** — Alt overrides (cloned from `.dotfiles-alt`)
-
-`setup.sh` orchestrates all three layers plus macOS-specific system preferences (`macos/macos.sh`).
-
-### Local Overlays (`local/`)
-
-Private dotfile overlays are cloned into `local/` by `setup.sh` (gitignored). This replaces the previous git submodule approach:
-- `local/personal/` — cloned from `.dotfiles-personal`
-- `local/alt/` — cloned from `.dotfiles-alt`
-
-Each overlay has a `home/` directory that stow applies on top of the main dotfiles.
+`dotfiles.sh` is the core script. It runs `stow -R --adopt` from `home/` targeting `$HOME`, then restores repo versions via `git checkout`. `setup.sh` orchestrates directory creation, nvim clone, macOS preferences, and dotfiles application.
 
 ### Neovim Config
 
@@ -58,12 +40,12 @@ Neovim config ([vinevim](https://github.com/codebycorey/vinevim)) is cloned dire
 
 ### Shell Configuration
 
-ZSH is the shell. `.zshenv` sets PATH and default programs (EDITOR=nvim). `.zshrc` sources shell configs in explicit order, then configures starship prompt, fnm, and zsh plugins.
+ZSH is the shell. Two main config files:
 
-Shell config files in `home/.config/shell/`:
-- `env` — extra environment variables (sourced first)
-- `aliases` — shell aliases
-- `functions` — utility functions (extract, wireguard, etc.)
+- **`.zshenv`** — PATH (`~/.local/bin`, `~/.cargo/bin`, `/opt/homebrew/bin`) and default programs (EDITOR=nvim)
+- **`.zshrc`** — sources `~/.config/shell/aliases`, sets zsh options, history, completions, starship prompt, fnm, and zsh plugins
+
+Shell aliases and functions live in a single file: `home/.config/shell/aliases`.
 
 ### Custom Scripts (`home/.local/bin/`)
 
@@ -96,4 +78,3 @@ Stowed to `~/.claude/`, merging alongside Claude Code's own files (`settings.jso
 - Indent with 4 spaces (see `.editorconfig`)
 - Shell scripts use `#!/usr/bin/env bash` (or `zsh` for shell configs)
 - Configs targeting `$HOME` go in `home/` mirroring the home directory structure
-- Private/machine-specific configs go in `local/personal/` or `local/alt/`, not in `home/`
