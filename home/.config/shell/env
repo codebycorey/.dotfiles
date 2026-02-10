@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-
-export PERSONAL_DIRS="$HOME/personal" 

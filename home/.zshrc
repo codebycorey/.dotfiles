@@ -1,9 +1,7 @@
 #!/usr/bin/env zsh
 
 # ZSH CONFIGURATION
-source "$HOME/.config/shell/env"
 source "$HOME/.config/shell/aliases"
-source "$HOME/.config/shell/functions"
 
 bindkey -s '^f' "tmux-manager\n"
 bindkey -s '^n' "nvim\n"
