@@ -58,6 +58,6 @@ if [[ "$MODE" == "clean" ]]; then
     exit 0
 fi
 
-stow -R -v $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
+stow -R -v --adopt $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
 
 echo "Operation complete"
