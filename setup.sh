@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# set -e  # Disabled to allow script to continue on errors
+
+# Log failures with line numbers (doesn't abort like set -e)
+trap 'echo "[ERROR] Failed at line $LINENO: $BASH_COMMAND" >&2' ERR
 
 echo "Starting setup..."
 echo "OS Type: $OSTYPE"
@@ -36,4 +38,11 @@ fi
 chmod +x "$HOME/.local/bin/"* 2>/dev/null || true
 if [ -d "$HOME/.claude/hooks" ]; then
     chmod +x "$HOME/.claude/hooks/"*.sh 2>/dev/null || true
+fi
+
+# Install TPM plugins if TPM is available
+TPM_INSTALL="/opt/homebrew/opt/tpm/share/tpm/bin/install_plugins"
+if [ -x "$TPM_INSTALL" ]; then
+    echo "Installing tmux plugins via TPM..."
+    "$TPM_INSTALL" || echo "[WARNING] TPM plugin install failed, continuing..." >&2
 fi
