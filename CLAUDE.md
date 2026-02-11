@@ -53,7 +53,7 @@ Shell aliases and functions live in a single file: `home/.config/shell/aliases`.
 
 - `tmux-sessionizer` — enhanced fzf-based tmux session picker with rich previews, session management, and per-project layout support (bound to `Ctrl-f` in zsh and `prefix f` in tmux). Edit `INCLUDE_PATHS` and `EXTRA_PATHS` arrays to change listed directories. Supports `.tmux-layout.sh` files for automated workspace setup.
 - `tmux-sessionizer-preview` — preview script for tmux-sessionizer showing git info, project type, and session status
-- `tmux-layout-helpers` — shared layout functions (`window`, `pane`, `run_command`) sourced by tmux-sessionizer and the `p` shell function. Not a standalone script.
+- `tmux-layout-helpers` — shared layout functions (`window`, `pane`, `run_command`) sourced by tmux-sessionizer. Not a standalone script.
 - `tmux-command-palette` — fzf popup menu of common tmux actions (bound to `prefix P`)
 - `tmux-capture-context` — captures pane output and pipes to Claude Code for analysis (bound to `prefix C`)
 - `archive-project` — moves a project from `~/projects/personal/` to `~/archives/`, kills active tmux session
@@ -89,3 +89,4 @@ Stowed to `~/.claude/`, merging alongside Claude Code's own files (`settings.jso
 - Indent with 4 spaces (see `.editorconfig`)
 - Shell scripts use `#!/usr/bin/env bash` (or `zsh` for shell configs)
 - Configs targeting `$HOME` go in `home/` mirroring the home directory structure
+- Machine-specific git config (user.name, email, signing) goes in `~/.gitconfig.local` (included by the stowed `.gitconfig`)

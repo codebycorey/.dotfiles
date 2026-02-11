@@ -22,5 +22,8 @@ history
 .zsh_history
 .zsh_sessions
 
+# Backups
+*.bak
+
 #work
 work-tmux

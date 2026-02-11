@@ -40,7 +40,7 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
 # Use the correct homebrew path based on architecture
-if [ "$(arch)" = "arm64" ]; then
+if [[ "$(arch)" = "arm64" ]]; then
     [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
@@ -51,7 +51,7 @@ eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-if [ "$(arch)" = "arm64" ]; then
+if [[ "$(arch)" = "arm64" ]]; then
     _brew_prefix="/opt/homebrew"
 else
     _brew_prefix="/usr/local"
