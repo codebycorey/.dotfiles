@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Deduplicate PATH entries (appends are idempotent)
+typeset -U PATH
+
 # Removes % from top of prompt
 unsetopt PROMPT_SP
 
