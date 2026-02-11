@@ -35,6 +35,9 @@ alias ccr="claude --resume"
 alias ccc="claude --continue"
 alias ccd="claude --dangerously-skip-permissions"
 
+# --- Notify ---
+alias nrun="notify-run"
+
 # --- Functions ---
 
 command_exists() {

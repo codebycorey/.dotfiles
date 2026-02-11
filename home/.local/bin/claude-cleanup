@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -e
+
+# Find and kill orphaned Claude Code processes.
+# Orphans = claude processes with no controlling TTY (the pane they ran in is gone).
+# Active instances attached to a live TTY are left alone.
+
+list_claude_processes() {
+    # TTY, PID, elapsed time, command
+    ps -eo tty,pid,etime,command | grep -i '[c]laude' | grep -v 'claude-cleanup'
+}
+
+list_orphans() {
+    list_claude_processes | awk '$1 == "??"'
+}
+
+list_active() {
+    list_claude_processes | awk '$1 != "??"'
+}
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo "Usage: claude-cleanup [--dry-run | --all]"
+    echo ""
+    echo "Kills orphaned Claude Code processes (no controlling TTY)."
+    echo "Active instances attached to a live terminal are left alone."
+    echo ""
+    echo "  --dry-run  Show what would be killed without killing"
+    echo "  --all      Kill ALL claude processes (including active ones)"
+    exit 0
+fi
+
+orphans=$(list_orphans)
+active=$(list_active)
+
+if [[ -n "$active" ]]; then
+    echo "Active (keeping):"
+    echo "$active" | while IFS= read -r line; do
+        echo "  $line"
+    done
+    echo ""
+fi
+
+if [[ "$1" == "--all" ]]; then
+    all=$(list_claude_processes)
+    if [[ -z "$all" ]]; then
+        echo "No claude processes found."
+        exit 0
+    fi
+    echo "Killing ALL claude processes..."
+    echo "$all" | awk '{print $2}' | xargs kill 2>/dev/null || true
+    echo "Done."
+    exit 0
+fi
+
+if [[ -z "$orphans" ]]; then
+    echo "No orphaned claude processes found."
+    exit 0
+fi
+
+echo "Orphaned (no TTY):"
+echo "$orphans" | while IFS= read -r line; do
+    echo "  $line"
+done
+
+if [[ "$1" == "--dry-run" ]]; then
+    echo ""
+    echo "(dry run — nothing killed)"
+    exit 0
+fi
+
+echo ""
+orphan_pids=$(echo "$orphans" | awk '{print $2}')
+echo "$orphan_pids" | xargs kill 2>/dev/null || true
+echo "Killed $(echo "$orphan_pids" | wc -l | tr -d ' ') orphaned process(es)."

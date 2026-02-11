@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+
+PROJECTS_DIR="$HOME/projects/personal"
+ARCHIVE_DIR="$HOME/archives"
+
+if [[ -z "$1" ]]; then
+    echo "Usage: unarchive-project <name>"
+    echo ""
+    echo "Restores a project from ~/archives/ to ~/projects/personal/"
+    echo ""
+    echo "Archived projects:"
+    ls -1 "$ARCHIVE_DIR" 2>/dev/null | sed 's/^/  /'
+    if [[ -z "$(ls -A "$ARCHIVE_DIR" 2>/dev/null)" ]]; then
+        echo "  (none)"
+    fi
+    exit 0
+fi
+
+PROJECT_NAME="$1"
+ARCHIVE_PATH="$ARCHIVE_DIR/$PROJECT_NAME"
+
+if [[ ! -d "$ARCHIVE_PATH" ]]; then
+    echo "Error: project '$PROJECT_NAME' not found in $ARCHIVE_DIR"
+    exit 1
+fi
+
+if [[ -d "$PROJECTS_DIR/$PROJECT_NAME" ]]; then
+    echo "Error: '$PROJECT_NAME' already exists in $PROJECTS_DIR"
+    exit 1
+fi
+
+mkdir -p "$PROJECTS_DIR"
+mv "$ARCHIVE_PATH" "$PROJECTS_DIR/"
+echo "Restored: $PROJECT_NAME → ~/projects/personal/$PROJECT_NAME"

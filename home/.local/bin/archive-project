@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+
+PROJECTS_DIR="$HOME/projects/personal"
+ARCHIVE_DIR="$HOME/archives"
+
+if [[ -z "$1" ]]; then
+    echo "Usage: archive-project <name>"
+    echo ""
+    echo "Moves a project from ~/projects/personal/ to ~/archives/"
+    echo "Kills any active tmux session for the project."
+    echo ""
+    echo "Available projects:"
+    ls -1 "$PROJECTS_DIR" 2>/dev/null | sed 's/^/  /'
+    exit 0
+fi
+
+PROJECT_NAME="$1"
+PROJECT_PATH="$PROJECTS_DIR/$PROJECT_NAME"
+
+if [[ ! -d "$PROJECT_PATH" ]]; then
+    echo "Error: project '$PROJECT_NAME' not found in $PROJECTS_DIR"
+    exit 1
+fi
+
+# Kill tmux session if it exists
+session_name=$(basename "$PROJECT_NAME" | sed -E 's/[^[:alnum:]_-]/_/g')
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    echo "Killing tmux session: $session_name"
+    tmux kill-session -t "$session_name"
+fi
+
+mkdir -p "$ARCHIVE_DIR"
+mv "$PROJECT_PATH" "$ARCHIVE_DIR/"
+echo "Archived: $PROJECT_NAME → ~/archives/$PROJECT_NAME"
