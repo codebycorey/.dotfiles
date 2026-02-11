@@ -29,11 +29,18 @@ Use this skill when setting up Claude Code in a new project for the first time, 
    - If tests exist: `test.md` (run tests intelligently)
    - If CI exists: `ci-check.md` (run CI checks locally)
 
-4. **Ask the user** to review the generated files and adjust as needed.
+4. **Generate stack-specific agents** in `.claude/agents/` based on detected tech stack:
+   - React / React Native / Expo → `component-builder.md` (sonnet, specializes in component patterns, hooks, styling)
+   - API / Backend (Express, Fastify, Hono, Django, Rails) → `api-builder.md` (sonnet, specializes in routes, middleware, validation)
+   - Database-heavy (Supabase, Firebase, Prisma, Drizzle) → `schema-reviewer.md` (sonnet, specializes in schema design, migrations, query patterns)
+   - Only generate agents that add stack-specific knowledge — the global agents (researcher, reviewer, implementer, test-writer, docs-writer, architect) are always available via `~/.claude/agents/`
+
+5. **Ask the user** to review the generated files and adjust as needed.
 
 ## Guidelines
 
 - Keep CLAUDE.md concise — focus on what an AI assistant needs to know
 - Only include commands that actually work (verify executables exist)
 - Match the project's existing style and conventions
-- Do not overwrite existing CLAUDE.md or commands without asking
+- Do not overwrite existing CLAUDE.md, commands, or agents without asking
+- Stack-specific agents should reference the project's actual libraries and patterns, not generic advice
