@@ -3,7 +3,6 @@ local wezterm = require("wezterm")
 local M = {
     themes = {
         catppuccin = "Catppuccin Mocha",
-        kanagawa = "Kanagawa (Gogh)",
     },
     color_schemes = {},
 }
