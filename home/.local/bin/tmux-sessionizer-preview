@@ -64,4 +64,4 @@ fi
 
 # --- Directory listing ---
 echo "=== Files ==="
-ls -1 --color=never "$dir" 2>/dev/null || ls -1 "$dir" 2>/dev/null
+ls -1 "$dir"

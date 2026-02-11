@@ -5,7 +5,7 @@
 
 CURRENT_SESSION=$(tmux display-message -p '#{session_name}')
 CURRENT_PATH=$(tmux display-message -p '#{pane_current_path}')
-RESURRECT_DIR="$HOME/.tmux/resurrect"
+RESURRECT_DIR="$HOME/.tmux/plugins/tmux-resurrect"
 
 actions=(
     "Kill current session"
