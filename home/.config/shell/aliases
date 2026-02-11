@@ -6,8 +6,8 @@ alias vim="nvim"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias mkdir="mkdir -pv"
-alias ls='ls --color=auto'
-alias ll="ls -FGlAhp --color=auto"
+alias ls='ls -G'
+alias ll="ls -FGlAhp"
 cd() { builtin cd "$@" && ll; }
 alias ..="cd ../"
 alias c="clear"
@@ -40,10 +40,6 @@ alias nrun="notify-run"
 
 # --- Functions ---
 
-command_exists() {
-    type "${1}" &> /dev/null ;
-}
-
 extract () {
     if [ -f "${1}" ] ; then
         case "${1}" in
@@ -58,9 +54,9 @@ extract () {
             *.zip)       unzip "${1}"       ;;
             *.Z)         uncompress "${1}"  ;;
             *.7z)        7z x "${1}"        ;;
-            *)     echo ""${1}" cannot be extracted via extract()" ;;
+            *)     echo "'${1}' cannot be extracted via extract()" ;;
         esac
     else
-        echo ""${1}" is not a valid file"
+        echo "'${1}' is not a valid file"
     fi
 }
