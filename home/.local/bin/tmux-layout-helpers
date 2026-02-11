@@ -28,8 +28,8 @@ pane() {
     local direction="$1"
     local command="$2"
 
-    local split_flag="-h"
-    [[ "$direction" == "horizontal" ]] && split_flag="-v"
+    local split_flag="-v"
+    [[ "$direction" == "horizontal" ]] && split_flag="-h"
 
     tmux split-window $split_flag -t "$SESSION_NAME" -c "$SESSION_DIR"
 

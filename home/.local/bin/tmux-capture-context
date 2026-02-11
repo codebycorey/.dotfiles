@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # Capture terminal output from the calling pane and analyze with Claude Code
 
+if ! command -v claude &> /dev/null; then
+    echo "Error: claude command not found. Install Claude Code first."
+    echo ""
+    echo "Press Enter to close..."
+    read -r
+    exit 1
+fi
+
 target_pane="${1:?Usage: tmux-capture-context <pane_id>}"
 
 captured=$(tmux capture-pane -t "$target_pane" -p -S -200)
@@ -13,7 +21,7 @@ if [[ -z "$captured" ]]; then
     exit 1
 fi
 
-tmpfile=$(mktemp /tmp/tmux-context.XXXXXX)
+tmpfile=$(mktemp "${TMPDIR:-/tmp}/tmux-context.XXXXXX")
 trap 'rm -f "$tmpfile"' EXIT
 
 cat > "$tmpfile" << EOF

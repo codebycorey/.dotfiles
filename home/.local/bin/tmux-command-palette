@@ -45,14 +45,14 @@ case "$selected" in
         ;;
     "Rename session")
         printf "New session name: "
-        read -r name
+        read -r name < /dev/tty
         if [[ -n "$name" ]]; then
             tmux rename-session "$name"
         fi
         ;;
     "Rename window")
         printf "New window name: "
-        read -r name
+        read -r name < /dev/tty
         if [[ -n "$name" ]]; then
             tmux rename-window "$name"
         fi
@@ -68,7 +68,7 @@ case "$selected" in
         ;;
     "Join pane from window")
         printf "Source window (e.g. 2 or session:2.1): "
-        read -r source
+        read -r source < /dev/tty
         if [[ -n "$source" ]]; then
             tmux join-pane -s "$source"
         fi
@@ -105,9 +105,17 @@ case "$selected" in
         tmux display-message "Tmux Config Reloaded!"
         ;;
     "Save session (resurrect)")
-        tmux run-shell "$RESURRECT_DIR/scripts/save.sh"
+        if [[ -d "$RESURRECT_DIR" ]]; then
+            tmux run-shell "$RESURRECT_DIR/scripts/save.sh"
+        else
+            tmux display-message "Error: tmux-resurrect not installed"
+        fi
         ;;
     "Restore session (resurrect)")
-        tmux run-shell "$RESURRECT_DIR/scripts/restore.sh"
+        if [[ -d "$RESURRECT_DIR" ]]; then
+            tmux run-shell "$RESURRECT_DIR/scripts/restore.sh"
+        else
+            tmux display-message "Error: tmux-resurrect not installed"
+        fi
         ;;
 esac
