@@ -22,6 +22,10 @@ else
     status="failed (exit $exit_code)"
 fi
 
-osascript -e "display notification \"$command_name $status in ${duration}s\" with title \"$title\""
+# Sanitize command_name for AppleScript
+sanitized_command="${command_name//\\/\\\\}"
+sanitized_command="${sanitized_command//\"/\\\"}"
+
+osascript -e "display notification \"$sanitized_command $status in ${duration}s\" with title \"$title\""
 
 exit $exit_code

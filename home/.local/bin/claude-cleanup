@@ -47,7 +47,7 @@ if [[ "$1" == "--all" ]]; then
         exit 0
     fi
     echo "Killing ALL claude processes..."
-    echo "$all" | awk '{print $2}' | xargs kill 2>/dev/null || true
+    echo "$all" | awk '{print $2}' | grep -E '^[0-9]+$' | xargs kill 2>/dev/null || true
     echo "Done."
     exit 0
 fi
@@ -69,6 +69,6 @@ if [[ "$1" == "--dry-run" ]]; then
 fi
 
 echo ""
-orphan_pids=$(echo "$orphans" | awk '{print $2}')
+orphan_pids=$(echo "$orphans" | awk '{print $2}' | grep -E '^[0-9]+$')
 echo "$orphan_pids" | xargs kill 2>/dev/null || true
 echo "Killed $(echo "$orphan_pids" | wc -l | tr -d ' ') orphaned process(es)."

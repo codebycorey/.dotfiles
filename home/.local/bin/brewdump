@@ -14,6 +14,12 @@ fi
 # Ensure the target directory exists
 mkdir -p "$(dirname "$BREWFILE_PATH")"
 
+# Backup existing Brewfile before overwriting
+if [[ -f "$BREWFILE_PATH" ]]; then
+    cp "$BREWFILE_PATH" "$BREWFILE_PATH.bak"
+    echo "Backed up existing Brewfile to $BREWFILE_PATH.bak"
+fi
+
 # Dump the current bundle state
 echo "Dumping current Homebrew bundle state to $BREWFILE_PATH..."
 brew bundle dump --file="$BREWFILE_PATH" --force
