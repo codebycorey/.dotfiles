@@ -59,10 +59,28 @@ fi
 stow -R -v $ADOPT $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
 
 # When --adopt is used, stow pulls existing files into the repo to resolve
-# conflicts. Restore repo versions so committed dotfiles always win.
+# conflicts. Show what changed and ask before restoring repo versions.
 if [[ -n "$ADOPT" && -z "$DRY_RUN" ]]; then
-    git -C "$REPO_DIR" checkout -- home
-    echo "Restored repo versions after adopt"
+    changes=$(git -C "$REPO_DIR" diff --stat -- home)
+    if [[ -n "$changes" ]]; then
+        echo ""
+        echo "Local files differ from repo versions after adopt:"
+        echo "$changes"
+        echo ""
+        if [[ -t 0 ]]; then
+            printf "Discard local changes and restore repo versions? [y/N] "
+            read -r confirm
+            if [[ "$confirm" == [yY] ]]; then
+                git -C "$REPO_DIR" checkout -- home
+                echo "Restored repo versions after adopt"
+            else
+                echo "Kept adopted local versions (repo now has your local files)"
+                echo "Run 'git diff -- home' to review, 'git checkout -- home' to restore repo versions"
+            fi
+        else
+            echo "Non-interactive: skipping checkout. Review with 'git diff -- home'"
+        fi
+    fi
 fi
 
 echo "Operation complete"
