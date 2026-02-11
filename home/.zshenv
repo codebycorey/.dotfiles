@@ -16,4 +16,4 @@ export BROWSER="firefox"
 export PAGER="less"
 export GIT_EDITOR='nvim'
 
-export GPG_TTY=$(tty)
+[[ -t 0 ]] && export GPG_TTY=$(tty)

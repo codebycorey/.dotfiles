@@ -25,6 +25,8 @@ setopt SHARE_HISTORY                # Share history across multiple terminal ses
 setopt EXTENDED_HISTORY             # Add more information to comand history
 setopt HIST_SAVE_NO_DUPS            # Don't save duplicate entries
 setopt HIST_IGNORE_DUPS             # Prevent duplicates from history
+setopt HIST_IGNORE_ALL_DUPS         # Remove older duplicates from history
+setopt HIST_FIND_NO_DUPS            # Don't show duplicates in history search
 setopt HIST_IGNORE_SPACE            # Prevent empty commands from history
 setopt HIST_REDUCE_BLANKS           # Remove extra blanks from command before adding to history
 
@@ -39,9 +41,9 @@ zstyle ':completion:*' cache-path "$HOME/.zcompcache"
 
 # Use the correct homebrew path based on architecture
 if [ "$(arch)" = "arm64" ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    eval "$(/usr/local/bin/brew shellenv)"
+    [[ -x /usr/local/bin/brew ]] && eval "$(/usr/local/bin/brew shellenv)"
 fi
 
 eval "$(starship init zsh)"
@@ -49,12 +51,17 @@ eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd)"
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-_brew_prefix=$(brew --prefix)
-source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if [ "$(arch)" = "arm64" ]; then
+    _brew_prefix="/opt/homebrew"
+else
+    _brew_prefix="/usr/local"
+fi
+[[ -f "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$_brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -f "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$_brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 unset _brew_prefix
 
 # FZF integration (keybindings and completion)
 source <(fzf --zsh)
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .venv --exclude dist --exclude target --exclude build --exclude .cache'
+export FZF_DEFAULT_OPTS="--layout=reverse --border --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
