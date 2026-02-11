@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Shared layout helper functions for .tmux-layout.sh files.
+# Sourced by tmux-sessionizer and the `p` shell function.
+# Not meant to be executed directly.
+#
+# Expects SESSION_NAME and SESSION_DIR to be set before sourcing.
+
+# Internal state for window numbering
+_WINDOW_INDEX=1
+
+# Create a new tmux window with a name and optional command.
+# Usage: window "name" ["command"]
+window() {
+    local name="$1"
+    local command="$2"
+
+    (( _WINDOW_INDEX++ ))
+    tmux new-window -t "${SESSION_NAME}:${_WINDOW_INDEX}" -n "$name" -c "$SESSION_DIR"
+
+    if [[ -n "$command" ]]; then
+        tmux send-keys -t "${SESSION_NAME}:${_WINDOW_INDEX}" "$command" Enter
+    fi
+}
+
+# Split the current window. Direction: "vertical" or "horizontal".
+# Usage: pane "vertical" ["command"]
+pane() {
+    local direction="$1"
+    local command="$2"
+
+    local split_flag="-h"
+    [[ "$direction" == "horizontal" ]] && split_flag="-v"
+
+    tmux split-window $split_flag -t "$SESSION_NAME" -c "$SESSION_DIR"
+
+    if [[ -n "$command" ]]; then
+        tmux send-keys -t "$SESSION_NAME" "$command" Enter
+    fi
+}
+
+# Send a command to the current pane.
+# Usage: run_command "npm run dev"
+run_command() {
+    local command="$1"
+    tmux send-keys -t "$SESSION_NAME" "$command" Enter
+}

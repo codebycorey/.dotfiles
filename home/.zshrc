@@ -3,7 +3,7 @@
 # ZSH CONFIGURATION
 source "$HOME/.config/shell/aliases"
 
-bindkey -s '^f' "tmux-manager\n"
+bindkey -s '^f' "tmux-sessionizer\n"
 bindkey -s '^n' "nvim\n"
 
 # ZSH Options

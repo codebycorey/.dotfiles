@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Capture terminal output from the calling pane and analyze with Claude Code
+
+target_pane="${1:?Usage: tmux-capture-context <pane_id>}"
+
+captured=$(tmux capture-pane -t "$target_pane" -p -S -200)
+
+if [[ -z "$captured" ]]; then
+    echo "No content captured from pane."
+    echo ""
+    echo "Press Enter to close..."
+    read -r
+    exit 1
+fi
+
+tmpfile=$(mktemp /tmp/tmux-context.XXXXXX)
+trap 'rm -f "$tmpfile"' EXIT
+
+cat > "$tmpfile" << EOF
+Analyze this terminal output. Identify any errors, warnings, or issues. Suggest fixes if applicable.
+
+---
+$captured
+---
+EOF
+
+claude --print < "$tmpfile"
+
+echo ""
+echo "Press Enter to close..."
+read -r

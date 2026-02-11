@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+# tmux-sessionizer — fzf-based tmux session picker with layout support.
+# Replaces tmux-manager with richer features: preview, session management,
+# and .tmux-layout.sh integration.
+
+# --- Directory selection configuration ---
+# Format: "path:maxdepth" (finds directories from depth 1 to maxdepth)
+INCLUDE_PATHS=(
+    "$HOME:1"                # All direct subdirs of $HOME
+    "$HOME/projects:2"       # All projects from depth 1-2 (e.g., projects/companyX/projectX)
+    "$HOME/docs:1"           # All direct subdirs of docs
+)
+# Explicitly add any extra paths here (not found by the above rules)
+EXTRA_PATHS=(
+    "$HOME/.config/nvim"  # Neovim config
+)
+
+# --- Layout helper functions (sourced from shared file) ---
+HELPERS_PATH="$(dirname "$0")/tmux-layout-helpers"
+if [[ -f "$HELPERS_PATH" ]]; then
+    source "$HELPERS_PATH"
+else
+    echo "Error: tmux-layout-helpers not found at $HELPERS_PATH" >&2
+    exit 1
+fi
+
+# --- Collect directories ---
+all_dirs=()
+for entry in "${INCLUDE_PATHS[@]}"; do
+    IFS=":" read -r path maxdepth <<< "$entry"
+    if [[ -d "$path" ]]; then
+        while IFS= read -r dir; do
+            all_dirs+=("$dir")
+        done < <(find "$path" -mindepth 1 -maxdepth "$maxdepth" -type d 2>/dev/null)
+    fi
+done
+
+for extra in "${EXTRA_PATHS[@]}"; do
+    [[ -d "$extra" ]] && all_dirs+=("$extra")
+done
+
+# Deduplicate
+mapfile -t all_dirs < <(printf '%s\n' "${all_dirs[@]}" | sort -u)
+
+# Write directory list to a temp file so fzf reload can reference it
+dir_list_file=$(mktemp)
+trap 'rm -f "$dir_list_file"' EXIT
+printf '%s\n' "${all_dirs[@]}" > "$dir_list_file"
+
+# --- Helper to build the fzf input list ---
+build_fzf_list() {
+    tmux list-sessions -F '#{session_name}' 2>/dev/null | sed 's/^/* /'
+    cat "$1"
+}
+
+fzf_input=$(build_fzf_list "$dir_list_file")
+
+preview_script="tmux-sessionizer-preview"
+
+# Reload command reused by both ctrl-x and ctrl-r bindings
+reload_cmd="tmux list-sessions -F '#{session_name}' 2>/dev/null | sed 's/^/* /'; cat $dir_list_file"
+
+# --- fzf selection ---
+selected=$(echo "$fzf_input" | fzf \
+    --reverse \
+    --border \
+    --header 'enter=select | ctrl-x=kill session | ctrl-r=rename session' \
+    --preview "$preview_script {}" \
+    --preview-window 'right:50%' \
+    --bind "ctrl-x:execute-silent(
+        selected={};
+        if [[ \"\$selected\" == '* '* ]]; then
+            session_name=\${selected#\\* };
+            tmux kill-session -t \"\$session_name\" 2>/dev/null;
+        fi
+    )+reload($reload_cmd)" \
+    --bind "ctrl-r:execute(
+        selected={};
+        if [[ \"\$selected\" == '* '* ]]; then
+            session_name=\${selected#\\* };
+            printf 'New name: ';
+            read new_name < /dev/tty;
+            if [[ -n \"\$new_name\" ]]; then
+                tmux rename-session -t \"\$session_name\" \"\$new_name\" 2>/dev/null;
+            fi
+        fi
+    )+reload($reload_cmd)"
+)
+
+# Exit if nothing selected
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+# --- Handle existing session selection ---
+if [[ "$selected" == '* '* ]]; then
+    session_name="${selected#\* }"
+
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t "$session_name"
+    else
+        tmux switch-client -t "$session_name"
+    fi
+    exit 0
+fi
+
+# --- Handle directory selection ---
+selected_dir="$selected"
+session_name=$(basename "$selected_dir" | sed -E 's/[^[:alnum:]_-]/_/g')
+
+# If session already exists, just switch to it
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t "$session_name"
+    else
+        tmux switch-client -t "$session_name"
+    fi
+    exit 0
+fi
+
+# --- Create new session ---
+tmux new-session -d -s "$session_name" -c "$selected_dir"
+
+# --- Apply layout if .tmux-layout.sh exists ---
+layout_file="$selected_dir/.tmux-layout.sh"
+if [[ -f "$layout_file" ]]; then
+    echo "Layout file found: $layout_file"
+    # Show a summary of what the layout defines
+    layout_windows=$(grep -c 'window ' "$layout_file" 2>/dev/null || echo "0")
+    layout_panes=$(grep -c 'pane ' "$layout_file" 2>/dev/null || echo "0")
+    echo "  Windows: $layout_windows, Panes: $layout_panes"
+
+    printf "Apply layout? [Y/n] "
+    read -r apply_layout < /dev/tty
+
+    if [[ "$apply_layout" != "n" && "$apply_layout" != "N" ]]; then
+        export SESSION_NAME="$session_name"
+        export SESSION_DIR="$selected_dir"
+        _WINDOW_INDEX=1
+        source "$layout_file"
+        # Return to the first window after layout
+        tmux select-window -t "${session_name}:1"
+    fi
+fi
+
+# --- Attach or switch ---
+if [[ -z "$TMUX" ]]; then
+    tmux attach-session -t "$session_name"
+else
+    tmux switch-client -t "$session_name"
+fi

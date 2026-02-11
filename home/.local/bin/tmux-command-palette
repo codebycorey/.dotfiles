@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+
+# tmux-command-palette — fzf popup menu of common tmux actions
+# Triggered by prefix + P in tmux
+
+CURRENT_SESSION=$(tmux display-message -p '#{session_name}')
+CURRENT_PATH=$(tmux display-message -p '#{pane_current_path}')
+RESURRECT_DIR="$HOME/.tmux/resurrect"
+
+actions=(
+    "Kill current session"
+    "Kill all other sessions"
+    "Rename session"
+    "Rename window"
+    "Move window left"
+    "Move window right"
+    "Break pane to window"
+    "Join pane from window"
+    "Swap pane"
+    "Toggle zoom"
+    "Even horizontal layout"
+    "Even vertical layout"
+    "New window"
+    "Kill window"
+    "Kill pane"
+    "Clear pane history"
+    "Show keybindings"
+    "Reload config"
+    "Save session (resurrect)"
+    "Restore session (resurrect)"
+)
+
+selected=$(printf '%s\n' "${actions[@]}" | fzf --reverse --border --prompt="tmux > ")
+
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+case "$selected" in
+    "Kill current session")
+        tmux kill-session -t "$CURRENT_SESSION"
+        ;;
+    "Kill all other sessions")
+        tmux kill-session -a -t "$CURRENT_SESSION"
+        ;;
+    "Rename session")
+        printf "New session name: "
+        read -r name
+        if [[ -n "$name" ]]; then
+            tmux rename-session "$name"
+        fi
+        ;;
+    "Rename window")
+        printf "New window name: "
+        read -r name
+        if [[ -n "$name" ]]; then
+            tmux rename-window "$name"
+        fi
+        ;;
+    "Move window left")
+        tmux swap-window -t -1\; select-window -t -1
+        ;;
+    "Move window right")
+        tmux swap-window -t +1\; select-window -t +1
+        ;;
+    "Break pane to window")
+        tmux break-pane
+        ;;
+    "Join pane from window")
+        printf "Source window (e.g. 2 or session:2.1): "
+        read -r source
+        if [[ -n "$source" ]]; then
+            tmux join-pane -s "$source"
+        fi
+        ;;
+    "Swap pane")
+        tmux swap-pane -D
+        ;;
+    "Toggle zoom")
+        tmux resize-pane -Z
+        ;;
+    "Even horizontal layout")
+        tmux select-layout even-horizontal
+        ;;
+    "Even vertical layout")
+        tmux select-layout even-vertical
+        ;;
+    "New window")
+        tmux new-window -c "$CURRENT_PATH"
+        ;;
+    "Kill window")
+        tmux kill-window
+        ;;
+    "Kill pane")
+        tmux kill-pane
+        ;;
+    "Clear pane history")
+        tmux clear-history
+        ;;
+    "Show keybindings")
+        tmux display-popup -E -w 80% -h 80% "tmux list-keys | less"
+        ;;
+    "Reload config")
+        tmux source-file ~/.tmux.conf
+        tmux display-message "Tmux Config Reloaded!"
+        ;;
+    "Save session (resurrect)")
+        tmux run-shell "$RESURRECT_DIR/scripts/save.sh"
+        ;;
+    "Restore session (resurrect)")
+        tmux run-shell "$RESURRECT_DIR/scripts/restore.sh"
+        ;;
+esac

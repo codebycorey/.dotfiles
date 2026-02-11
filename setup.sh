@@ -32,7 +32,8 @@ if ! ./dotfiles.sh "$@"; then
     echo "[WARNING] Dotfiles setup failed, continuing..." >&2
 fi
 
-# Ensure Claude Code hook scripts are executable
+# Ensure all custom scripts and hooks are executable
+chmod +x "$HOME/.local/bin/"* 2>/dev/null || true
 if [ -d "$HOME/.claude/hooks" ]; then
     chmod +x "$HOME/.claude/hooks/"*.sh 2>/dev/null || true
 fi

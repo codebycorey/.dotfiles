@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Preview script for tmux-sessionizer fzf selection.
+# Shows git info, project type, tmux session status, and directory listing.
+
+dir="$1"
+
+if [[ -z "$dir" || ! -d "$dir" ]]; then
+    echo "Invalid directory: $dir"
+    exit 0
+fi
+
+# --- Git information ---
+if [[ -d "$dir/.git" ]]; then
+    echo "=== Git ==="
+
+    branch=$(git -C "$dir" branch --show-current 2>/dev/null)
+    [[ -n "$branch" ]] && echo "Branch: $branch"
+
+    status_output=$(git -C "$dir" status --short 2>/dev/null)
+    if [[ -n "$status_output" ]]; then
+        echo "Status:"
+        echo "$status_output" | head -10
+    else
+        echo "Status: clean"
+    fi
+
+    echo ""
+    echo "Recent commits:"
+    git -C "$dir" log --oneline -5 2>/dev/null
+    echo ""
+fi
+
+# --- Project type detection ---
+detected_types=()
+[[ -f "$dir/package.json" ]] && detected_types+=("Node.js")
+[[ -f "$dir/Cargo.toml" ]] && detected_types+=("Rust")
+[[ -f "$dir/go.mod" ]] && detected_types+=("Go")
+[[ -f "$dir/pyproject.toml" ]] && detected_types+=("Python")
+[[ -f "$dir/Makefile" ]] && detected_types+=("Make")
+[[ -f "$dir/docker-compose.yml" || -f "$dir/docker-compose.yaml" ]] && detected_types+=("Docker Compose")
+
+if [[ ${#detected_types[@]} -gt 0 ]]; then
+    echo "=== Project ==="
+    echo "Type: $(IFS=', '; echo "${detected_types[*]}")"
+    echo ""
+fi
+
+# --- Tmux session status ---
+session_name=$(basename "$dir" | sed -E 's/[^[:alnum:]_-]/_/g')
+if tmux has-session -t "$session_name" 2>/dev/null; then
+    window_count=$(tmux list-windows -t "$session_name" 2>/dev/null | wc -l | tr -d ' ')
+    echo "=== Tmux ==="
+    echo "Session '$session_name' is active ($window_count window(s))"
+    echo ""
+fi
+
+# --- Layout file ---
+if [[ -f "$dir/.tmux-layout.sh" ]]; then
+    echo "=== Layout ==="
+    echo ".tmux-layout.sh found"
+    echo ""
+fi
+
+# --- Directory listing ---
+echo "=== Files ==="
+ls -1 --color=never "$dir" 2>/dev/null || ls -1 "$dir" 2>/dev/null

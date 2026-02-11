@@ -9,6 +9,8 @@ TARGET_DIR="$HOME"
 DRY_RUN=""
 MODE="install"
 
+ADOPT=""
+
 while [[ "$1" =~ ^- ]]; do
     if [[ "$1" == "--dry-run" || "$1" == "-n" ]]; then
         DRY_RUN="--no"
@@ -18,12 +20,16 @@ while [[ "$1" =~ ^- ]]; do
         MODE="clean"
         echo "CLEAN MODE - Removing dotfile symlinks"
         shift
+    elif [[ "$1" == "--adopt" ]]; then
+        ADOPT="--adopt"
+        echo "ADOPT MODE - Existing files will be adopted, then repo versions restored"
+        shift
     elif [[ "$1" == "--help" || "$1" == "-h" ]]; then
-        echo "Usage: $0 [--dry-run|-n] [--clean|-c]"
+        echo "Usage: $0 [--dry-run|-n] [--clean|-c] [--adopt]"
         exit 0
     else
         echo "Unknown option: $1"
-        echo "Usage: $0 [--dry-run|-n] [--clean|-c]"
+        echo "Usage: $0 [--dry-run|-n] [--clean|-c] [--adopt]"
         exit 1
     fi
 done
@@ -50,13 +56,13 @@ if [[ "$MODE" == "clean" ]]; then
     exit 0
 fi
 
-stow -R -v --adopt $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
+stow -R -v $ADOPT $DRY_RUN -t "$TARGET_DIR" -d "$STOW_DIR" .
 
-# --adopt moves existing files into the repo to resolve conflicts, which may
-# overwrite repo files with local versions. Restore the repo versions so the
-# committed dotfiles always win.
-if [[ -z "$DRY_RUN" ]]; then
+# When --adopt is used, stow pulls existing files into the repo to resolve
+# conflicts. Restore repo versions so committed dotfiles always win.
+if [[ -n "$ADOPT" && -z "$DRY_RUN" ]]; then
     git -C "$REPO_DIR" checkout -- home
+    echo "Restored repo versions after adopt"
 fi
 
 echo "Operation complete"
