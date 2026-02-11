@@ -33,6 +33,10 @@ default-root-container-orientation = 'auto'
 [mode.main.binding]
     alt-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
 
+    alt-tab = 'workspace-back-and-forth'
+    alt-bracketleft = 'workspace prev'
+    alt-bracketright = 'workspace next'
+
     alt-h = 'focus left'
     alt-j = 'focus down'
     alt-k = 'focus up'
