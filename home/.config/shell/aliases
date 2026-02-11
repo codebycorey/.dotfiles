@@ -10,6 +10,10 @@ alias ls='ls -G'
 alias ll="ls -FGlAhp"
 cd() { builtin cd "$@" && ll; }
 alias ..="cd ../"
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias proj="cd ~/projects/personal"
+alias dots="cd ~/.dotfiles"
 alias c="clear"
 alias path="echo -e ${PATH}"
 alias grep='grep --color=auto'
@@ -39,6 +43,22 @@ alias ccd="claude --dangerously-skip-permissions"
 alias nrun="notify-run"
 
 # --- Functions ---
+
+np() {
+    local project_dir="$HOME/projects/personal/$1"
+    if [[ -z "$1" ]]; then
+        echo "Usage: np <project-name>"
+        return 1
+    fi
+    if [[ -d "$project_dir" ]]; then
+        echo "Project '$1' already exists at $project_dir"
+        return 1
+    fi
+    mkdir -p "$project_dir"
+    git -C "$project_dir" init
+    echo "Created $project_dir"
+    echo "Next: Ctrl-f or prefix f to switch to it"
+}
 
 extract () {
     if [ -f "${1}" ] ; then
