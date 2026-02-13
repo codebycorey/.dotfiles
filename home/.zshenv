@@ -17,3 +17,6 @@ export PAGER="less"
 export GIT_EDITOR='nvim'
 
 [[ -t 0 ]] && export GPG_TTY=$(tty)
+
+# Claude Code auto-memory — persist project patterns across sessions
+export CLAUDE_CODE_DISABLE_AUTO_MEMORY=0

@@ -18,18 +18,6 @@
     ],
     "defaultMode": "dontAsk"
   },
-  "enabledPlugins": {
-    "expo-app-design@expo-plugins": false,
-    "expo-deployment@expo-plugins": true,
-    "upgrading-expo@expo-plugins": true,
-    "frontend-design@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "ds@delta-spec": true,
-    "plugin-dev@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {},
   "hooks": {
     "Notification": [
       {
@@ -53,6 +41,56 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/block-destructive.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Review the conversation transcript and determine if Claude should stop. Check: 1) All user-requested tasks completed? 2) If code was changed, was it verified (tests, lint, typecheck run)? 3) Any obvious follow-ups needed? Context: $ARGUMENTS",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/session-context.sh"
+          }
+        ]
+      }
     ]
+  },
+  "enabledPlugins": {
+    "expo-app-design@expo-plugins": false,
+    "expo-deployment@expo-plugins": true,
+    "upgrading-expo@expo-plugins": true,
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "ds@delta-spec": true,
+    "plugin-dev@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "skipDangerousModePermissionPrompt": true,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-command.sh"
   }
 }
