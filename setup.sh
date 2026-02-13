@@ -34,6 +34,23 @@ if ! ./dotfiles.sh "$@"; then
     echo "[WARNING] Dotfiles setup failed, continuing..." >&2
 fi
 
+# Set up git identity if not configured
+if [ ! -f "$HOME/.gitconfig.local" ]; then
+    echo "No ~/.gitconfig.local found. Setting up git identity..."
+    read -p "Git name: " git_name
+    read -p "Git email: " git_email
+    if [ -n "$git_name" ] && [ -n "$git_email" ]; then
+        cat > "$HOME/.gitconfig.local" <<EOF
+[user]
+    name = $git_name
+    email = $git_email
+EOF
+        echo "Created ~/.gitconfig.local"
+    else
+        echo "[WARNING] Skipped git identity setup (empty input)" >&2
+    fi
+fi
+
 # Ensure all custom scripts and hooks are executable
 chmod +x "$HOME/.local/bin/"* 2>/dev/null || true
 if [ -d "$HOME/.claude/hooks" ]; then
