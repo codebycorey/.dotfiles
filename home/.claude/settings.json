@@ -53,17 +53,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Review the conversation transcript and determine if Claude should stop. Check: 1) All user-requested tasks completed? 2) If code was changed, was it verified (tests, lint, typecheck run)? 3) Any obvious follow-ups needed? Context: $ARGUMENTS",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "startup|resume|clear",
@@ -76,8 +65,12 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
-    "expo-app-design@expo-plugins": false,
+    "expo-app-design@expo-plugins": true,
     "expo-deployment@expo-plugins": true,
     "upgrading-expo@expo-plugins": true,
     "frontend-design@claude-plugins-official": true,
@@ -88,9 +81,7 @@
     "plugin-dev@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {},
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline-command.sh"
-  }
+  "editorMode": "vim"
 }
